@@ -49,11 +49,11 @@ const getClient = thunky(cb => {
 getClient(client => {
 
     client.on('error', err => {
-        message.info(err);
+        console.log(err);
     });
 
     client.on('warning', msg => {
-        message.warn(msg);
+        console.log(msg);
     })
 });
 
@@ -148,16 +148,13 @@ class P2pShareComponent extends React.Component {
                 addTorrent(torrent);
                 message.destroy();
                 torrent.on('error', function (err) {
-                    message.info(err);
+                    console.log(err);
                 });
                 torrent.on('done', function () {
-                    message.info('done');
                     //将文件保存到浏览器默认的下载文件夹下
                     torrent.files.forEach(file => {
                         file.getBlob((err, blob) => {
-                            message.info('doWithBlob');
                             let url = URL.createObjectURL(blob);
-                            message.info(url);
                             let a = document.createElement('a');
                             document.body.appendChild(a);
                             a.style.display = 'none';
@@ -180,8 +177,11 @@ class P2pShareComponent extends React.Component {
 
     componentDidMount() {
         let hash = document.location.hash;
-        if(hash){
-            hash = hash.substring(1);
+        //去掉第一个HashRouter生成的#
+        hash = hash.substring(1);
+        let hashIndex = hash.indexOf('#');
+        if(hashIndex >= 0){
+            hash = hash.substring(hashIndex + 1);
             this.downloadByTorrentId(hash);
         }
         // 周期性更新界面的信息，实时监控
