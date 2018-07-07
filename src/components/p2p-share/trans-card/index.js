@@ -14,7 +14,6 @@ import message from 'antd/lib/message';
 import Tooltip from 'antd/lib/tooltip';
 import Button from 'antd/lib/button';
 import Modal from 'antd/lib/modal';
-import path from 'path';
 
 
 const radius = '8px';
@@ -87,6 +86,10 @@ const DisplayContent = styled.div`
     padding: 30px !important;
 `;
 
+const OperatorButton = styled(Button)`
+    margin-right: 10px;
+`;
+
 function getFormatSpeed(rawBytes) {
     return prettyBytes(rawBytes) + " / s";
 }
@@ -97,6 +100,7 @@ class TransCard extends React.Component {
         super(props);
         this.onDisplayClick = this.onDisplayClick.bind(this);
         this.onCancel = this.onCancel.bind(this);
+        this.downloadFileToLocal = this.downloadFileToLocal.bind(this);
         this.state = {
             visible: false,
         }
@@ -114,7 +118,9 @@ class TransCard extends React.Component {
         setTimeout(() => {
             let torrent = this.props.torrent;
             torrent.files.forEach(file => {
-                file.appendTo('#display', (err, elem) => {
+                file.appendTo('#display', {
+                    autoplay: true,
+                }, (err, elem) => {
                     if (err) {
                         message.info('该类型的文件无法预览');
                         console.log(err);
@@ -135,7 +141,27 @@ class TransCard extends React.Component {
         })
     }
 
-    componentDidMount() {
+    /**
+     * 将Blob对象中的文件保存到本地
+     */
+    downloadFileToLocal() {
+        let torrent = this.props.torrent;
+        //将文件保存到浏览器默认的下载文件夹下
+        torrent.files.forEach(file => {
+            file.getBlob((err, blob) => {
+                let url = URL.createObjectURL(blob);
+                let a = document.createElement('a');
+                document.body.appendChild(a);
+                a.style.display = 'none';
+                a.download = file.name;
+                a.href = url;
+                a.click();
+                URL.revokeObjectURL(url);
+            })
+        })
+    }
+
+    componentDidMount(){
         let torrent = this.props.torrent;
         this.clipBoardMagnet = new ClipBoard(`.clip-magnet${torrent.infoHash}`);
         this.clipBoardMagnet.on('success', TransCard.handleClip);
@@ -143,7 +169,6 @@ class TransCard extends React.Component {
         this.clipBoardDownloadLink.on('success', TransCard.handleClip);
         this.clipBoardURLAndMagnet = new ClipBoard(`.clip-url-magnet${torrent.infoHash}`);
         this.clipBoardURLAndMagnet.on('success', TransCard.handleClip);
-
     }
 
     componentWillUnmount() {
@@ -205,21 +230,33 @@ class TransCard extends React.Component {
                         </Tooltip>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <Tooltip placement="topLeft"
-                                 title="复制本网站地址及磁力链接发送给其他用户，其他用户打开本网站，输入磁力链接点击下载即可（注意：分享文件的用户在对方接收完毕之前不要关闭本网站，会导致传输中断）"
+                                 title="复制提取码发送给其他用户，其他用户打开本网站，输入提取码点击下载即可（注意：分享文件的用户在对方接收完毕之前不要关闭本网站，会导致传输中断）"
                                  arrowPointAtCenter>
                             <a href="javascript:void(0);" className={`clip-url-magnet${torrent.infoHash}`}
-                               data-clipboard-text={`网站：${document.location.origin + document.location.pathname}\n磁力链接：${torrent.magnetURI}`}>[复制本站点地址以及磁力链接]</a>
+                               data-clipboard-text={torrent.code}>[{`复制提取码: ${torrent.code}`}]</a>
                         </Tooltip>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                         <Tooltip placement="topLeft"
                                  title="复制下载链接发送给其他用户，其他用户点击链接就会开始下载。（这种方式添加下载可能需要额外的解析时间，下载的时候请耐心等待）">
                             <a href="javascript:void(0);" className={`clip-download-link${torrent.infoHash}`}
-                               data-clipboard-text={document.location.origin + document.location.pathname + '#' + torrent.infoHash}>[复制下载链接]</a>
+                               data-clipboard-text={`${document.location.origin}${document.location.pathname}#${torrent.code ? torrent.code : torrent.infoHash}`}>[复制下载链接]</a>
                         </Tooltip>
                     </p>
-                    <Button onClick={this.onDisplayClick}>
-                        预览
-                    </Button>
+                    <Tooltip placement={'left'} title={'可预览视频(MP4)、图片、PDF、MP3（其中视频和音乐可以边下载边播放，图片和PDF需下载完成方可预览）'}>
+                        <OperatorButton onClick={this.onDisplayClick}>
+                            预览
+                        </OperatorButton>
+                    </Tooltip>
+                    {
+                        type === 'download' && +progress === 1 ?
+                            <Tooltip placement={'right'} title={'将下载完的文件保存至本地'}>
+                                <OperatorButton onClick={this.downloadFileToLocal}>
+                                    保存到本地
+                                </OperatorButton>
+                            </Tooltip>
+                            :
+                            ''
+                    }
                     <ItemTags>
                         <Tag color={BaseColor.tag_color_2}>上传速度：{getFormatSpeed(uploadSpeed)}</Tag>
                         <Tag color={BaseColor.tag_color_3}>下载速度：{getFormatSpeed(downloadSpeed)}</Tag>

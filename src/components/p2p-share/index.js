@@ -142,32 +142,43 @@ class P2pShareComponent extends React.Component {
 
     downloadByTorrentId(value) {
         let {addTorrent} = this.props;
-        getClient(client => {
-            message.success('正在尝试下载文件...');
-            client.add(value, torrent => {
-                torrent.myType = 'download';
-                addTorrent(torrent);
-                message.destroy();
-                torrent.on('error', function (err) {
-                    console.log(err);
-                });
-                torrent.on('done', function () {
-                    //将文件保存到浏览器默认的下载文件夹下
-                    torrent.files.forEach(file => {
-                        file.getBlob((err, blob) => {
-                            let url = URL.createObjectURL(blob);
-                            let a = document.createElement('a');
-                            document.body.appendChild(a);
-                            a.style.display = 'none';
-                            a.download = file.name;
-                            a.href = url;
-                            a.click();
-                            URL.revokeObjectURL(url);
+        if(value.length === 4){     //用提取码下载
+            axios.get(`/getId?code=${value}`)
+                .then(res => {
+                    if(res.data.code === 0 && !!res.data.data){
+                        getClient(client => {
+                            message.success('正在尝试下载文件...');
+                            client.add(res.data.data, torrent => {
+                                torrent.myType = 'download';
+                                addTorrent(torrent);
+                                message.destroy();
+                                torrent.on('error', function (err) {
+                                    console.log(err);
+                                });
+                            })
                         })
-                    })
-                });
+                    } else {
+                        message.error('无效的提取码')
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    message.error('无效的提取码')
+                })
+        } else {
+            getClient(client => {
+                message.success('正在尝试下载文件...');
+                client.add(value, torrent => {
+                    torrent.myType = 'download';
+                    addTorrent(torrent);
+                    message.destroy();
+                    torrent.on('error', function (err) {
+                        console.log(err);
+                    });
+                })
             })
-        })
+        }
+
     }
 
     onDownload(value) {
@@ -210,7 +221,7 @@ class P2pShareComponent extends React.Component {
         let {downloadSpeed, uploadSpeed} = this.props.client;
         return (
             <P2pBody>
-                <ToolTip placement={'top'} title={'选择文件分享，将生成的磁力链接发送给好友，即可开始传输文件。（传输过程中请保持本页面不关闭，越多人下载，下载的速度会越快）'}>
+                <ToolTip placement={'right'} title={'选择文件分享，将生成的磁力链接发送给好友，即可开始传输文件。（传输过程中请保持本页面不关闭，越多人下载，下载的速度会越快）'}>
                     <ShareButton onClick={() => {
                         this.inputFile.click();
                     }}>分享
@@ -218,7 +229,7 @@ class P2pShareComponent extends React.Component {
                 </ToolTip>
                 <ToolTip placement={'topRight'} title={'请输入有效的磁力链接，成功下载到种子文件后会在列表中显示（无效的磁力链接，或者下载不到种子文件的链接，将不会在列表中显示）'}>
                     <DownloadInput
-                        placeholder="在此输入磁力链接"
+                        placeholder="在此输入磁力链接或下载码"
                         enterButton="下载"
                         size="large"
                         onSearch={this.onDownload}
