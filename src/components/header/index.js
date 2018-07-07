@@ -3,7 +3,7 @@ import React from 'react'
 import Menu from 'antd/lib/menu';
 import Icon from 'antd/lib/icon';
 import Dropdown from 'antd/lib/dropdown';
-
+import message from 'antd/lib/message';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
@@ -69,10 +69,12 @@ class Nav extends React.Component {
 
     render() {
         const {isMobile, onSelect} = this.props;
-
+        let hash = document.location.hash;
+        hash = hash.substring(1);
+        let index = hash.indexOf('#');
         // 根据当前地址栏的URL，判断当前应该是哪个菜单项被选中
         let selectedKey = '/' + document.location.pathname.split('/').pop();
-
+        message.info(selectedKey);
         let dropDownMenu = (
             <Menu
                 theme={'light'}

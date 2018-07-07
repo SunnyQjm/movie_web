@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import {
-    HashRouter as Router,
+    BrowserRouter as Router,
     Route,
 } from 'react-router-dom';
 import {
