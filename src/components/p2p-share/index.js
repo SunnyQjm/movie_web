@@ -179,9 +179,7 @@ class P2pShareComponent extends React.Component {
         let hash = document.location.hash;
         //去掉第一个HashRouter生成的#
         hash = hash.substring(1);
-        let hashIndex = hash.indexOf('#');
-        if(hashIndex >= 0){
-            hash = hash.substring(hashIndex + 1);
+        if(hash){
             this.downloadByTorrentId(hash);
         }
         // 周期性更新界面的信息，实时监控

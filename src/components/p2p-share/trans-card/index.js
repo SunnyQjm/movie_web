@@ -146,7 +146,7 @@ class TransCard extends React.Component {
                     <p>
                         <a href="javascript:void(0);" className={`clip-magnet${torrent.infoHash}`} data-clipboard-text={torrent.magnetURI}>[复制磁力链接]</a>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <a href="javascript:void(0);" className={`clip-download-link${torrent.infoHash}`} data-clipboard-text={document.location.origin + document.location.pathname + '#/p2pshare' + '#' + torrent.infoHash}>[复制下载链接]</a>
+                        <a href="javascript:void(0);" className={`clip-download-link${torrent.infoHash}`} data-clipboard-text={document.location.origin + document.location.pathname + '#' + torrent.infoHash}>[复制下载链接]</a>
                     </p>
                     <ItemTags>
                         <Tag color={BaseColor.tag_color_2}>上传速度：{getFormatSpeed(uploadSpeed)}</Tag>
