@@ -12,7 +12,7 @@ import Tag from 'antd/lib/tag';
 import prettyBytes from 'pretty-bytes';
 import createTorrent from 'create-torrent';
 import message from 'antd/lib/message';
-import Icon from 'antd/lib/icon';
+import QueueAnim from 'rc-queue-anim';
 import axios from 'axios';
 
 
@@ -79,7 +79,7 @@ const ShareButton = styled(BaseAppThemeButton)`
 
 const DownloadInput = styled(Search)`
     margin-top: 20px;
-    width: 500px;
+    max-width: 500px;
 `;
 
 const P2pBody = styled.div`
@@ -227,7 +227,9 @@ class P2pShareComponent extends React.Component {
                     <Tag color={BaseColor.tag_color_3}>总下载速度：{getFormatSpeed(downloadSpeed)}</Tag>
                 </GlobalTags>
                 <TransCardsBody>
-                    {transCards}
+                    <QueueAnim>
+                        {transCards}
+                    </QueueAnim>
                 </TransCardsBody>
             </P2pBody>
         );
