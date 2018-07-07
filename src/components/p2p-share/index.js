@@ -12,6 +12,7 @@ import Tag from 'antd/lib/tag';
 import prettyBytes from 'pretty-bytes';
 import createTorrent from 'create-torrent';
 import message from 'antd/lib/message';
+import ToolTip from 'antd/lib/tooltip';
 import QueueAnim from 'rc-queue-anim';
 import axios from 'axios';
 
@@ -209,17 +210,21 @@ class P2pShareComponent extends React.Component {
         let {downloadSpeed, uploadSpeed} = this.props.client;
         return (
             <P2pBody>
-                <ShareButton onClick={() => {
-                    this.inputFile.click();
-                }}>分享
-                </ShareButton>
-                <DownloadInput
-                    placeholder="在此输入磁力链接"
-                    enterButton="下载"
-                    size="large"
-                    onSearch={this.onDownload}
-                    innerRef={instance => this.inputMagnet = instance}
-                />
+                <ToolTip placement={'top'} title={'选择文件分享，将生成的磁力链接发送给好友，即可开始传输文件。（传输过程中请保持本页面不关闭，越多人下载，下载的速度会越快）'}>
+                    <ShareButton onClick={() => {
+                        this.inputFile.click();
+                    }}>分享
+                    </ShareButton>
+                </ToolTip>
+                <ToolTip placement={'topRight'} title={'请输入有效的磁力链接，成功下载到种子文件后会在列表中显示（无效的磁力链接，或者下载不到种子文件的链接，将不会在列表中显示）'}>
+                    <DownloadInput
+                        placeholder="在此输入磁力链接"
+                        enterButton="下载"
+                        size="large"
+                        onSearch={this.onDownload}
+                        innerRef={instance => this.inputMagnet = instance}
+                    />
+                </ToolTip>
                 <FileInput type="file" innerRef={instance => this.inputFile = instance}
                            onChange={this.handleChange} multiple/>
                 <GlobalTags>

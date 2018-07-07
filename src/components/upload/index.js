@@ -7,6 +7,17 @@ import styled from 'styled-components';
 
 const Dragger = Upload.Dragger;
 
+const UploadPage = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    width: 100%;
+`;
+
+const UploadBody = styled.div`
+    height: 300px;
+    width: 500px;
+`;
 
 const props = {
     name: 'file',
@@ -53,17 +64,16 @@ class UploadComponent extends React.Component {
         props.onChange = this.onChange;
         props.fileList = this.state.fileList;
         return (
-            <div style={{
-                height: '300px',
-                width: '500px',
-            }}>
-                <Dragger {...props}>
-                    <p className="ant-upload-drag-icon">
-                        <Icon type="inbox" />
-                    </p>
-                    <p className="ant-upload-text">点击此处或拖拽上传</p>
-                </Dragger>
-            </div>
+            <UploadPage>
+                <UploadBody>
+                    <Dragger {...props}>
+                        <p className="ant-upload-drag-icon">
+                            <Icon type="inbox" />
+                        </p>
+                        <p className="ant-upload-text">点击此处或拖拽上传</p>
+                    </Dragger>
+                </UploadBody>
+            </UploadPage>
         )
     }
 }

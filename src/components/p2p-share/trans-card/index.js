@@ -82,7 +82,7 @@ function getFormatSpeed(rawBytes) {
 class TransCard extends React.Component {
 
     static handleClip(e){
-            message.info('成功复制到剪切板');
+            message.success('成功复制到剪切板');
             e.clearSelection();
     }
 
@@ -92,11 +92,14 @@ class TransCard extends React.Component {
         this.clipBoardMagnet.on('success', TransCard.handleClip);
         this.clipBoardDownloadLink = new ClipBoard(`.clip-download-link${torrent.infoHash}`);
         this.clipBoardDownloadLink.on('success', TransCard.handleClip);
+        this.clipBoardURLAndMagnet = new ClipBoard(`.clip-url-magnet${torrent.infoHash}`);
+        this.clipBoardURLAndMagnet.on('success', TransCard.handleClip);
     }
 
     componentWillUnmount(){
         this.clipBoardMagnet.destroy();
         this.clipBoardDownloadLink.destroy();
+        this.clipBoardURLAndMagnet.destroy();
     }
 
     render() {
@@ -144,9 +147,17 @@ class TransCard extends React.Component {
                         {`${title} 等共${torrent.files.length}个文件,总大小为${prettyBytes(totalLength)}`}
                     </Title>
                     <p>
-                        <a href="javascript:void(0);" className={`clip-magnet${torrent.infoHash}`} data-clipboard-text={torrent.magnetURI}>[复制磁力链接]</a>
+                        <Tooltip placement="topLeft" title="复制磁力链接发送给其他用户，其他用户打开本网站，输入磁力链接点击下载即可（注意：分享文件的用户在对方接收完毕之前不要关闭本网站，会导致传输中断）" arrowPointAtCenter>
+                            <a href="javascript:void(0);" className={`clip-magnet${torrent.infoHash}`} data-clipboard-text={torrent.magnetURI}>[复制磁力链接]</a>
+                        </Tooltip>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        <a href="javascript:void(0);" className={`clip-download-link${torrent.infoHash}`} data-clipboard-text={document.location.origin + document.location.pathname + '#' + torrent.infoHash}>[复制下载链接]</a>
+                        <Tooltip placement="topLeft" title="复制本网站地址及磁力链接发送给其他用户，其他用户打开本网站，输入磁力链接点击下载即可（注意：分享文件的用户在对方接收完毕之前不要关闭本网站，会导致传输中断）" arrowPointAtCenter>
+                            <a href="javascript:void(0);" className={`clip-url-magnet${torrent.infoHash}`} data-clipboard-text={`网站：${document.location.origin + document.location.pathname}\n磁力链接：${torrent.magnetURI}` }>[复制本站点地址以及磁力链接]</a>
+                        </Tooltip>
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                        <Tooltip placement="topLeft" title="复制下载链接发送给其他用户，其他用户点击链接就会开始下载。（这种方式添加下载可能需要额外的解析时间，下载的时候请耐心等待）">
+                            <a href="javascript:void(0);" className={`clip-download-link${torrent.infoHash}`} data-clipboard-text={document.location.origin + document.location.pathname + '#' + torrent.infoHash}>[复制下载链接]</a>
+                        </Tooltip>
                     </p>
                     <ItemTags>
                         <Tag color={BaseColor.tag_color_2}>上传速度：{getFormatSpeed(uploadSpeed)}</Tag>
