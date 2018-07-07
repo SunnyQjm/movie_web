@@ -31,9 +31,9 @@ const {
 } = Input;
 
 const getClient = thunky(cb => {
-    getRtcConfig((err, rtcConfig) =>{
+    getRtcConfig((err, rtcConfig) => {
         let client;
-        if(err)
+        if (err)
             client = new WebTorrent();
         else {
             client = new WebTorrent({
@@ -140,11 +140,11 @@ class P2pShareComponent extends React.Component {
         }
     }
 
-    downloadByTorrentId(value){
+    downloadByTorrentId(value) {
         let {addTorrent} = this.props;
         getClient(client => {
             message.success('正在尝试下载文件...');
-            client.add(value,torrent => {
+            client.add(value, torrent => {
                 torrent.myType = 'download';
                 addTorrent(torrent);
                 message.destroy();
@@ -170,7 +170,7 @@ class P2pShareComponent extends React.Component {
         })
     }
 
-    onDownload(value){
+    onDownload(value) {
         //清空输入框中的磁力链接
         this.inputMagnet.input.input.value = '';
         this.downloadByTorrentId(value);
@@ -180,7 +180,7 @@ class P2pShareComponent extends React.Component {
         let hash = document.location.hash;
         //去掉第一个HashRouter生成的#
         hash = hash.substring(1);
-        if(hash){
+        if (hash) {
             this.downloadByTorrentId(hash);
         }
         // 周期性更新界面的信息，实时监控
