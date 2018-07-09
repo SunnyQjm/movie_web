@@ -9,6 +9,8 @@ const BaseColor = {
 
 };
 
+const FONT_FAMILY = "'Chela One', cursive";
+
 const BaseAppThemeButton = styled.button`
     border: none;
     color: white !important;
@@ -25,7 +27,12 @@ const BaseAppThemeButton = styled.button`
     }    
 `;
 
+const T1 = styled.h1`
+    font-family: ${FONT_FAMILY};
+    color: ${BaseColor.color_apptheme};
+`;
 export {
     BaseAppThemeButton,
     BaseColor,
+    T1
 }

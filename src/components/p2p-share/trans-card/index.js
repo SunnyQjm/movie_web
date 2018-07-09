@@ -121,11 +121,13 @@ class TransCard extends React.Component {
                 file.appendTo('#display', {
                     autoplay: true,
                 }, (err, elem) => {
+                    console.log('callback');
                     if (err) {
                         message.info('该类型的文件无法预览');
                         console.log(err);
-                    }
-                    else {
+                    } else {
+                        console.log('element');
+                        console.log(elem);
                         elem.style.width = '100%';
                         elem.style.minHeight = '600px'
                     }
@@ -148,8 +150,7 @@ class TransCard extends React.Component {
         let torrent = this.props.torrent;
         //将文件保存到浏览器默认的下载文件夹下
         torrent.files.forEach(file => {
-            file.getBlob((err, blob) => {
-                let url = URL.createObjectURL(blob);
+            file.getBlobURL((err, url) => {
                 let a = document.createElement('a');
                 document.body.appendChild(a);
                 a.style.display = 'none';
@@ -157,11 +158,11 @@ class TransCard extends React.Component {
                 a.href = url;
                 a.click();
                 URL.revokeObjectURL(url);
-            })
+            });
         })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let torrent = this.props.torrent;
         this.clipBoardMagnet = new ClipBoard(`.clip-magnet${torrent.infoHash}`);
         this.clipBoardMagnet.on('success', TransCard.handleClip);
@@ -217,7 +218,7 @@ class TransCard extends React.Component {
                             <Icon type="cloud-upload-o"/>
                     }
                 </MyTag>
-                <TransCardContent>
+                <TransCardContent id={'display-body'}>
                     <Title>
                         {`${title} 等共${torrent.files.length}个文件,总大小为${prettyBytes(totalLength)}`}
                     </Title>
@@ -248,7 +249,7 @@ class TransCard extends React.Component {
                         </OperatorButton>
                     </Tooltip>
                     {
-                        type === 'download' && +progress === 1 ?
+                        true && +progress === 1 ?
                             <Tooltip placement={'right'} title={'将下载完的文件保存至本地'}>
                                 <OperatorButton onClick={this.downloadFileToLocal}>
                                     保存到本地

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';  // or 'antd/dist/antd.less'
 import {enquireScreen} from 'enquire-js';       //用于做手机屏幕适配
+import './config/axios-config';         //导入axios配置
+
 import {
     BrowserRouter as Router,
     Route,

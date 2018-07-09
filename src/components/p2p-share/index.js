@@ -4,7 +4,8 @@ import WebTorrent from 'webtorrent';
 import thunky from 'thunky';
 import {
     BaseAppThemeButton,
-    BaseColor
+    BaseColor,
+    T1
 } from '../base/base-component';
 import TransCard from './trans-card';
 import Input from 'antd/lib/input';
@@ -13,7 +14,12 @@ import prettyBytes from 'pretty-bytes';
 import createTorrent from 'create-torrent';
 import message from 'antd/lib/message';
 import ToolTip from 'antd/lib/tooltip';
+import BackTop from 'antd/lib/back-top';
 import QueueAnim from 'rc-queue-anim';
+import {
+    getTorrentTransferAxois,
+    TorrentTransferAPI,
+} from '../../config/API';
 import axios from 'axios';
 
 
@@ -87,6 +93,7 @@ const P2pBody = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 50px;
 `;
 
 const FileInput = styled.input`
@@ -142,29 +149,31 @@ class P2pShareComponent extends React.Component {
 
     downloadByTorrentId(value) {
         let {addTorrent} = this.props;
-        if(value.length === 4){     //用提取码下载
-            axios.get(`/getId?code=${value}`)
-                .then(res => {
-                    if(res.data.code === 0 && !!res.data.data){
-                        getClient(client => {
-                            message.success('正在尝试下载文件...');
-                            client.add(res.data.data, torrent => {
-                                torrent.myType = 'download';
-                                addTorrent(torrent);
-                                message.destroy();
-                                torrent.on('error', function (err) {
-                                    console.log(err);
-                                });
+        if (value.length === 4) {     //用提取码下载
+            getTorrentTransferAxois(axios => {
+                axios.get(`${TorrentTransferAPI.GET_ID.api}?${TorrentTransferAPI.GET_ID.PARAM_CODE}=${value}`)
+                    .then(res => {
+                        if (res.data.code === 0 && !!res.data.data) {
+                            getClient(client => {
+                                message.success('正在尝试下载文件...');
+                                client.add(res.data.data, torrent => {
+                                    torrent.myType = 'download';
+                                    addTorrent(torrent);
+                                    message.destroy();
+                                    torrent.on('error', function (err) {
+                                        console.log(err);
+                                    });
+                                })
                             })
-                        })
-                    } else {
+                        } else {
+                            message.error('无效的提取码')
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
                         message.error('无效的提取码')
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    message.error('无效的提取码')
-                })
+                    })
+            });
         } else {
             getClient(client => {
                 message.success('正在尝试下载文件...');
@@ -221,13 +230,17 @@ class P2pShareComponent extends React.Component {
         let {downloadSpeed, uploadSpeed} = this.props.client;
         return (
             <P2pBody>
+                <BackTop/>
+                <T1>P2P SHARE</T1>
                 <ToolTip placement={'right'} title={'选择文件分享，将生成的磁力链接发送给好友，即可开始传输文件。（传输过程中请保持本页面不关闭，越多人下载，下载的速度会越快）'}>
-                    <ShareButton onClick={() => {
-                        this.inputFile.click();
-                    }}>分享
-                    </ShareButton>
+                    <ToolTip placement={'left'} title={'注意：大于800M的文件可能无法传输'}>
+                        <ShareButton onClick={() => {
+                            this.inputFile.click();
+                        }}>分享
+                        </ShareButton>
+                    </ToolTip>
                 </ToolTip>
-                <ToolTip placement={'topRight'} title={'请输入有效的磁力链接，成功下载到种子文件后会在列表中显示（无效的磁力链接，或者下载不到种子文件的链接，将不会在列表中显示）'}>
+                <ToolTip placement={'left'} title={'请输入有效的磁力链接，成功下载到种子文件后会在列表中显示（无效的磁力链接，或者下载不到种子文件的链接，将不会在列表中显示）'}>
                     <DownloadInput
                         placeholder="在此输入磁力链接或下载码"
                         enterButton="下载"

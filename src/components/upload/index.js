@@ -2,16 +2,25 @@ import React from 'react';
 
 import Upload from 'antd/lib/upload';
 import Icon from 'antd/lib/icon';
-import message from 'antd/lib/message';
 import styled from 'styled-components';
+import ToolTip from 'antd/lib/tooltip';
+import {
+    T1
+} from '../base/base-component';
+import {
+    MovieAPI
+} from '../../config/API';
 
 const Dragger = Upload.Dragger;
 
 const UploadPage = styled.div`
+    padding: 50px;
     display: flex;
     align-items: center;
     justify-content:center;
     width: 100%;
+    flex-direction: column;
+    font-family: 'Chela One', cursive;
 `;
 
 const UploadBody = styled.div`
@@ -22,14 +31,14 @@ const UploadBody = styled.div`
 const props = {
     name: 'file',
     multiple: true,
-    action: 'http://localhost:4897/upload',
+    action: MovieAPI.UPLOAD_FILE.url,
     onPreview: file => {
         console.log(file);
     }
 };
 
 class UploadComponent extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.state = {
@@ -37,7 +46,7 @@ class UploadComponent extends React.Component {
         }
     }
 
-    onChange(info){
+    onChange(info) {
         let fileList = info.fileList;
 
         // // 1. Limit the number of uploaded files
@@ -58,21 +67,29 @@ class UploadComponent extends React.Component {
         //     return true;
         // });
 
-        this.setState({ fileList });
+        this.setState({fileList});
     }
-    render(){
+
+    render() {
         props.onChange = this.onChange;
         props.fileList = this.state.fileList;
         return (
             <UploadPage>
-                <UploadBody>
-                    <Dragger {...props}>
-                        <p className="ant-upload-drag-icon">
-                            <Icon type="inbox" />
-                        </p>
-                        <p className="ant-upload-text">点击此处或拖拽上传</p>
-                    </Dragger>
-                </UploadBody>
+                <T1>SHARE FIRST</T1>
+                <ToolTip placement={'left'} title={'上传成功之后便可以在站内资源检索到您分享的资源'}>
+                    <ToolTip placement={'right'} title={'声明：分享的文件会被上传到资源社区，所有用户都能获取~'}>
+                        <UploadBody>
+                            <Dragger {...props}>
+
+                                <p className="ant-upload-drag-icon">
+                                    <Icon type="inbox"/>
+                                </p>
+                                <p className="ant-upload-text">点击此处或拖拽上传</p>
+
+                            </Dragger>
+                        </UploadBody>
+                    </ToolTip>
+                </ToolTip>
             </UploadPage>
         )
     }
