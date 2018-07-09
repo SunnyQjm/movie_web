@@ -41,6 +41,7 @@ export default connect(
                             if(!items || items.length === 0){       //没有获取到数据说明说有数据都获取完毕了
                                 dispatch({
                                     type: ACTION_HOME_NO_MORE,
+
                                 });
                             } else {
                                 dispatch({
