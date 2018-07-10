@@ -6,7 +6,7 @@ import thunky from 'thunky';
 import axios from 'axios';
 
 const TorrentTransferAPI = {
-    BASE_URL: `http://${TorrentTransferServerConfig.host}:${TorrentTransferServerConfig.port}`,
+    BASE_URL: TorrentTransferServerConfig.BASE_URL,
     PUSH_ID: {
         api: '/pushId',
         PARAM_TORRENT_ID: 'torrentId',
@@ -25,7 +25,7 @@ const getTorrentTransferAxois = thunky(cb => {
 });
 
 const MovieAPI = {
-    BASE_URL: `http://${ServerConfig.host}:${ServerConfig.port}`,
+    BASE_URL: ServerConfig.BASE_URL,
     /**
      * GET 获取电影信息的接口
      */

@@ -65,7 +65,7 @@ getClient(client => {
 });
 
 function getRtcConfig(cb) {
-    axios.get('https://instant.io/_rtcConfig')
+    axios.get('https://instant.io/__rtcConfig__')
         .then(response => {
             let rtcConfig = response.data;
             delete rtcConfig.comment;
