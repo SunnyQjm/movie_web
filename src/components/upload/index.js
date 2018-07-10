@@ -1,11 +1,13 @@
 import React from 'react';
 
-import Upload from 'antd/lib/upload';
+import Upload from 'rc-upload';
 import Icon from 'antd/lib/icon';
 import styled from 'styled-components';
 import ToolTip from 'antd/lib/tooltip';
 import {
-    T1
+    T1,
+    BaseColor,
+    BaseHoverFloatDiv,
 } from '../base/base-component';
 import {
     MovieAPI,
@@ -19,7 +21,7 @@ import QueueAnim from 'rc-queue-anim';
 import BackTop from 'antd/lib/back-top';
 
 
-const Dragger = Upload.Dragger;
+// const Dragger = Upload.Dragger;
 
 const UploadPage = styled.div`
     padding: 50px;
@@ -30,7 +32,14 @@ const UploadPage = styled.div`
     flex-direction: column;
 `;
 
-const UploadBody = styled.div`
+const UploadBody = styled(BaseHoverFloatDiv)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: ${BaseColor.color_apptheme};
+    color: white;
+    border-radius: 10px;
     height: 300px;
     width: 500px;
 `;
@@ -55,7 +64,9 @@ class UploadComponent extends React.Component {
         super(props);
         this.onChange = this.onChange.bind(this);
         this.onRemove = this.onRemove.bind(this);
+        this.onProgress = this.onProgress.bind(this);
         this.beforeUpload = this.beforeUpload.bind(this);
+        this.uploader = React.createRef();
     }
 
     beforeUpload(file, fileList) {
@@ -95,9 +106,16 @@ class UploadComponent extends React.Component {
         addFile(file);
     }
 
-    onRemove(file){
+    onRemove(file) {
+        this.uploader.abort(file);
         let {removeFile} = this.props;
         removeFile(file);
+    }
+
+    async onProgress(progressEvent, file){
+        let {addFile} = this.props;
+        file.percent = progressEvent.percent;
+        addFile(file);
     }
 
     render() {
@@ -116,14 +134,23 @@ class UploadComponent extends React.Component {
                 <T1>SHARE FIRST</T1>
                 <ToolTip placement={'left'} title={'上传成功之后便可以在站内资源检索到您分享的资源'}>
                     <ToolTip placement={'right'} title={'声明：分享的文件会被上传到资源社区，所有用户都能获取~'}>
-                        <UploadBody>
-                            <Dragger {...props}>
-                                <p className="ant-upload-drag-icon">
-                                    <Icon type="inbox"/>
-                                </p>
-                                <p className="ant-upload-text">点击此处或拖拽上传</p>
-                            </Dragger>
-                        </UploadBody>
+                        <Upload {...props} ref={instance => {
+                            this.uploader = instance;
+                        }} style={{
+                            outline: '0 none'
+                        }} onProgress={this.onProgress}>
+                            <UploadBody>
+                                <Icon type="inbox" style={{
+                                    fontSize: '2em',
+                                    marginBottom: '10px',
+                                }}/>
+                                <span style={{
+                                    fontSize: '1.8em'
+                                }}>点击此处或拖拽到此上传</span>
+                                <span>(上传过程中请不要切换到本站点的其他功能模块，否则传输过程会中断)</span>
+                            </UploadBody>
+                        </Upload>
+
                     </ToolTip>
                 </ToolTip>
                 <UploadListBody>

@@ -6,7 +6,7 @@ const BaseColor = {
     tag_color_2: '#2db7f5',
     tag_color_3: '#87d068',
     tag_color_4: '#108ee9',
-
+    lightGray: '#ddd    '
 };
 
 const FONT_FAMILY = "'Chela One', cursive";
@@ -27,6 +27,19 @@ const BaseAppThemeButton = styled.button`
     }    
 `;
 
+const BaseHoverFloatDiv = styled.div`
+    &:focus {
+        border: none;
+        outline: none;
+    }
+    &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+        transform: translateY(-1px);
+        box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+    }
+`;
+
 const T1 = styled.h1`
     font-family: ${FONT_FAMILY};
     color: ${BaseColor.color_apptheme};
@@ -34,5 +47,6 @@ const T1 = styled.h1`
 export {
     BaseAppThemeButton,
     BaseColor,
-    T1
+    T1,
+    BaseHoverFloatDiv
 }

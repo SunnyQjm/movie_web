@@ -105,7 +105,7 @@ class UploadCard extends React.Component {
                                 width: '40px',
                             }}/>
                             :
-                            <Progress type="circle" percent={(+(!!percent ? percent : 0)).toFixed(1)} width={40}/>
+                            <Progress type="circle" percent={percent.toFixed(1)} width={40}/>
                     }
                 </ProgressBody>
 
