@@ -4,6 +4,9 @@ import Tabs from 'antd/lib/tabs';
 import BackTop from 'antd/lib/back-top';
 import styled from 'styled-components';
 import {
+    withRouter
+} from 'react-router-dom';
+import {
     T1
 } from '../base/base-component';
 import Spin from 'antd/lib/spin';
@@ -21,39 +24,44 @@ const ItemsBody = styled(InfiniteScroll)`
     flex-wrap: wrap;
 `;
 
-function createItems(items, hasMore, loading, loadMore, key, isMobile) {
-    let Items = items.map((movie, index) => {
-        return <ResourceItem key={movie.id} file={movie}/>
-    });
 
-    let itemsBodyStyle = {
-
-    };
-    if(isMobile){
-        itemsBodyStyle.display = 'flex';
-        itemsBodyStyle.justifyContent = 'center';
-        itemsBodyStyle.alignItems = 'center';
-    }
-    return <TabPane tab={key} key={key}>
-        <ItemsBody
-            pageStart={0}
-            loadMore={page => {
-                loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO)
-            }}
-            hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
-            style={itemsBodyStyle}
-        >
-            {Items}
-        </ItemsBody>
-        {loading ? <Spin style={{
-            width: '100%',
-            margin: '0 auto',
-        }} tip={'Loading...'}/> : ''}
-    </TabPane>
-}
 class HomeComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.createItems = this.createItems.bind(this);
+    }
+
+    createItems(items, hasMore, loading, loadMore, key, isMobile) {
+        let Items = items.map((movie, index) => {
+            return <ResourceItem key={movie.id} file={movie} onClick={() => {
+                this.props.history.push(`/detail/${movie.id}`)
+            }}/>
+        });
+
+        let itemsBodyStyle = {
+
+        };
+        if(isMobile){
+            itemsBodyStyle.display = 'flex';
+            itemsBodyStyle.justifyContent = 'center';
+            itemsBodyStyle.alignItems = 'center';
+        }
+        return <TabPane tab={key} key={key}>
+            <ItemsBody
+                pageStart={0}
+                loadMore={page => {
+                    loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO)
+                }}
+                hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
+                style={itemsBodyStyle}
+            >
+                {Items}
+            </ItemsBody>
+            {loading ? <Spin style={{
+                width: '100%',
+                margin: '0 auto',
+            }} tip={'Loading...'}/> : ''}
+        </TabPane>
     }
 
     render() {
@@ -63,27 +71,27 @@ class HomeComponent extends React.Component {
             imageItems, imageHasMore,
             applicationItems, applicationHasMore,
             loadMore, loading,
-            isMobile} = this.props;
-        let AllItems = createItems(allItems, allHasMore, loading, page => {
+            isMobile, activityTabKey,
+            changeTab,} = this.props;
+        let AllItems = this.createItems(allItems, allHasMore, loading, page => {
             loadMore(page, true, true)
         }, '所有资源', isMobile);
 
-        let VideoItems = createItems(videoItems, videoHasMore, loading, page => {
+        let VideoItems = this.createItems(videoItems, videoHasMore, loading, page => {
             loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
         }, '视频', isMobile);
 
-        let AutioItems = createItems(audioItems, audioHasMore, loading, page => {
+        let AutioItems = this.createItems(audioItems, audioHasMore, loading, page => {
             loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
         }, '音频', isMobile);
 
-        let ImageItems = createItems(imageItems, imageHasMore, loading, page => {
+        let ImageItems = this.createItems(imageItems, imageHasMore, loading, page => {
             loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
         }, '图片', isMobile);
 
-        let ApplicationItems = createItems(applicationItems, applicationHasMore, loading, page => {
+        let ApplicationItems = this.createItems(applicationItems, applicationHasMore, loading, page => {
             loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
         }, '文档', isMobile);
-
 
 
         return (
@@ -94,7 +102,7 @@ class HomeComponent extends React.Component {
                     textAlign: 'center',
                     marginBottom: '20px',
                 }}>RESOURCE CENTER</T1>
-                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'}>
+                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab} activeKey={activityTabKey}>
                     {AllItems}
                     {VideoItems}
                     {AutioItems}
@@ -107,4 +115,4 @@ class HomeComponent extends React.Component {
     }
 }
 
-export default HomeComponent;
+export default withRouter(HomeComponent);

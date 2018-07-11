@@ -11,6 +11,7 @@ import {
     ACTION_HOME_LOADING_FINISH,
     ACTION_HOME_NO_MORE,
     ACTION_HOME_BEGIN_LOADING,
+    ACTION_HOME_CHANGE_TAB,
 } from '../../ActionType';
 import message from 'antd/lib/message';
 import {
@@ -73,7 +74,12 @@ export default connect(
                             message.info('获取错误')
                         });
                 });
-
+            },
+            changeTab: (key) => {
+                dispatch({
+                    type: ACTION_HOME_CHANGE_TAB,
+                    data: key,
+                })
             }
         }
     },

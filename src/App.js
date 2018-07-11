@@ -16,6 +16,7 @@ import {
     HomeContainer,
     P2pShareContainer,
     UploadContainer,
+    DetailContainer,
 } from './containers'
 import store from './store';
 import styled from 'styled-components';
@@ -70,6 +71,9 @@ class App extends Component {
                                 isMobile: isMobile
                             })}/>
                             <Route key={'c'} path={LocalRouter.P2P_SHARE} component={withPropsComponent(P2pShareContainer, {
+                                isMobile: isMobile,
+                            })}/>
+                            <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`} component={withPropsComponent(DetailContainer, {
                                 isMobile: isMobile,
                             })}/>
                         </MyContent>

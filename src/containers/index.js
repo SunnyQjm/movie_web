@@ -3,6 +3,7 @@ import FooterContainer from './footer'
 import HomeContainer from './home';
 import P2pShareContainer from './p2p-share';
 import UploadContainer from './upload';
+import DetailContainer from './detail';
 
 export {
     HeaderContainer,
@@ -10,4 +11,5 @@ export {
     HomeContainer,
     P2pShareContainer,
     UploadContainer,
+    DetailContainer,
 }
