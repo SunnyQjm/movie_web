@@ -24,7 +24,7 @@ import BackTop from 'antd/lib/back-top';
 // const Dragger = Upload.Dragger;
 
 const UploadPage = styled.div`
-    padding: 50px;
+    padding: 30px 50px;
     display: flex;
     align-items: center;
     justify-content:center;

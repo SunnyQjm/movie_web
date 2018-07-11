@@ -93,7 +93,7 @@ const P2pBody = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 50px;
+    padding: 30px 50px;
 `;
 
 const FileInput = styled.input`
