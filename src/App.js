@@ -48,7 +48,6 @@ class App extends Component {
     componentDidMount() {
         // 适配手机屏幕;
         enquireScreen((b) => {
-            console.log('do it: ' + b);
             this.setState({isMobile: !!b});
         });
     }

@@ -33,7 +33,7 @@ class HomeComponent extends React.Component {
 
     createItems(items, hasMore, loading, loadMore, key, isMobile) {
         let Items = items.map((movie, index) => {
-            return <ResourceItem key={movie.id} file={movie} onClick={() => {
+            return <ResourceItem key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
             }}/>
         });

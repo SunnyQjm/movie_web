@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import {
     StaticFileConfig
 } from '../../../config/server-info-config';
+import {
+    getIconByMIME
+} from '../../../tool/icon-tool';
 
 const radius = '8px';
 
@@ -35,38 +38,16 @@ const CardTitle = styled.span`
     text-align: center;
 `;
 
-function getIconByMIME(mime) {
-    if (mime.startsWith('audio/'))
-        return require('../../../img/music.png');
-    else if (mime.startsWith('application/vnd.ms-excel')
-        || mime.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.'))
-        return require('../../../img/excel.png');
-    else if (mime.startsWith('application/msword') ||
-        mime.startsWith('application/vnd.openxmlformats-officedocument.wordprocessingml') ||
-        mime.startsWith('application/vnd.ms-word'))
-        return require('../../../img/word.png');
-    else if(mime.startsWith('application/vnd.ms-powerpoint') ||
-        mime.startsWith('application/vnd.openxmlformats-officedocument.presentationml'))
-        return require('../../../img/ppt.png');
-    else if(mime.startsWith('application/pdf'))
-        return require('../../../img/pdf.png');
-    else if(mime.startsWith('image'))
-        return require('../../../img/picture.png');
-    else
-        return require('../../../img/file.png');
-}
-
 class ResourceItem extends React.Component {
 
     render() {
-        let {movieName, size, createAt, mime, downloadPath, percent, cover} = this.props.file;
+        let {movieName, size, createAt, mime, downloadPath, percent, cover} = this.props.resource;
         let {onRemove, width} = this.props;
         let cardImageStyle = {
             width: width,
             height: width,
             borderStyle: 'none',
         };
-        // backgroundImage: `url(${cardImage})`,
 
         let cardImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6x0qGQamxaiAtVE-O8L5LVkC5wrT8Fe9AmKiJfk8bOpCj5mxZ4Q';
         if (cover) {
@@ -99,13 +80,9 @@ class ResourceItem extends React.Component {
 }
 
 ResourceItem.propTypes = {
-    file: PropTypes.shape({
+    resource: PropTypes.shape({
             name: PropTypes.string,
             size: PropTypes.number,
-            uid: PropTypes.string,
-            type: PropTypes.string,
-            percent: PropTypes.number,
-            response: PropTypes.object,
         }
     ),
     width: PropTypes.number,
@@ -113,13 +90,9 @@ ResourceItem.propTypes = {
 };
 
 ResourceItem.defaultProps = {
-    file: PropTypes.shape({
-            name: '',
+    resource: PropTypes.shape({
+            movieName: '',
             size: 0,
-            uid: '',
-            type: '',
-            percent: 0.1,
-            response: {},
         }
     ),
     width: 200,

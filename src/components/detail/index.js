@@ -1,25 +1,199 @@
 import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types'
+import {
+    StaticFileConfig
+} from '../../config/server-info-config';
+import {
+    getIconByMIME
+} from '../../tool/icon-tool';
+import {
+    T1,
+} from '../../components/base/base-component';
+import {BaseColor} from "../base/base-component";
+import Tag from 'antd/lib/tag';
+import Button from 'antd/lib/button';
+import prettyBytes from "pretty-bytes";
+import Moment from 'moment';
+import 'gitment/style/default.css'
+import Gitment from 'gitment'
+import ClipBoard from 'clipboard';
+import message from "antd/lib/message/index";
+
+const radius = '8px';
+
+const DetailBody = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 50px;
+`;
+
+const TransCardBody = styled.div`
+    border-radius: ${radius};
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+`;
+
+const CardImage = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: ${radius};
+    background-size: cover;
+`;
+
+const CardTitle = styled.span`
+    font-size: 1.4em;
+    margin: 10px;
+    text-align: center;
+`;
+const ItemTags = styled.div`
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-warp: wrap;
+    width: 100%;
+`;
+
+const OperatorButtons = styled.div`
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+`;
+
+const OperatorButton = styled(Button)`
+    margin: 5px;
+`;
 
 class DetailComponent extends React.Component {
 
-
-    componentDidMount(){
-        let {match, passResource, updateResourceInfo, getResourceById} = this.props;
-        if(passResource)        //如果外边传入了数据就先显示传入的数据
-            updateResourceInfo(passResource);
+    static handleClip(e) {
+        message.success('成功复制到剪切板');
+        e.clearSelection();
+    }
+    componentDidMount() {
+        let {match, getResourceById} = this.props;
+        this.copyBoardMagnet = new ClipBoard(`#copy-magnet`);
+        this.copyBoardMagnet.on('success', DetailComponent.handleClip);
+        this.copyBordDownloadLink = new ClipBoard('#copy-download-link');
+        this.copyBordDownloadLink.on('success', DetailComponent.handleClip);
         getResourceById(match.params.id);
     }
+
+    componentWillUnmount(){
+        this.copyBoardMagnet.destroy();
+        this.copyBordDownloadLink.destroy();
+    }
+
     render() {
-        let {match, resource} = this.props;
-        if(!resource)
-            resource = {};
+        let resource = this.props.resource;
+        if(!resource.dp){
+            const gitment = new Gitment({
+                id: resource.id, // optional
+                owner: 'SunnyQjm',
+                repo: 'movie_web',
+                oauth: {
+                    client_id: '18173fd8605b5c387012',
+                    client_secret: '680864c20e99ef281b12c427818e88a5d0383031',
+                },
+            });
+            gitment.render('comments')
+        }
+        let {movieName, size, createAt, mime, downloadPath, percent, cover} = resource;
+        let {width, isMobile} = this.props;
+        let cardImageStyle = {
+            width: width,
+            height: width,
+            borderStyle: 'none',
+        };
+
+        let cardImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6x0qGQamxaiAtVE-O8L5LVkC5wrT8Fe9AmKiJfk8bOpCj5mxZ4Q';
+        if (cover) {
+            cardImage = cover.startsWith('http') ? cover : StaticFileConfig.BASE_URL + cover;
+            cardImageStyle.backgroundImage = `url(${cardImage})`;
+        } else {
+            cardImageStyle.backgroundColor = 'white';
+        }
+        let commentsStyle = {
+            width: '800px',
+        };
+        if(isMobile){
+            commentsStyle.width = '100%';
+        }
+        //取得文件列表中最大的文件作为主标题
         return (
-            <div>
-                <p>{resource.movieName}</p>
-                Detail of {match.params.id}
-            </div>
-        );
+            <DetailBody>
+                <T1 style={{
+                    margin: '0 auto',
+                    textAlign: 'center',
+                    marginBottom: '20px',
+                }}>RESOURCE DETAIL</T1>
+                <TransCardBody {...this.props}>
+                    <CardImage style={cardImageStyle}>
+                        {
+                            !!cover ?
+                                ''
+                                :
+                                <img src={getIconByMIME(mime)} alt="" style={{
+                                    width: width,
+                                    height: width,
+                                }}/>
+                        }
+                    </CardImage>
+                    < CardTitle> {movieName}</CardTitle>
+                    <ItemTags>
+                        <Tag color={BaseColor.tag_color_3}>{new Moment(resource.createAt).format('YYYY-MM-DD')}</Tag>
+                        <Tag color={BaseColor.tag_color_2}>{prettyBytes(resource.size ? resource.size : 0)}</Tag>
+                        {
+                            resource.isDownload ?
+                                <Tag color={BaseColor.tag_color_1}>有资源</Tag>
+                                :
+                                <Tag color={BaseColor.lightGray}>无资源</Tag>
+
+                        }
+                    </ItemTags>
+                    <OperatorButtons>
+                        <OperatorButton disabled={!resource.isDownload}><a href={StaticFileConfig.BASE_URL + resource.downloadPath} download={movieName}>预览或下载</a></OperatorButton>
+                        <OperatorButton id={'copy-magnet'} disabled={!resource.isDownload} data-clipboard-text={StaticFileConfig.BASE_URL + resource.downloadPath}>复制下载链接</OperatorButton>
+                        <OperatorButton id={'copy-download-link'} disabled={(!resource.torrents || resource.magnets.length===0)} data-clipboard-text={resource.magnets && resource.magnets.length > 0 && resource.magnets[0]}>复制磁力链接</OperatorButton>
+                    </OperatorButtons>
+                </TransCardBody>
+                <div id={'comments'} style={commentsStyle}/>
+            </DetailBody>
+        )
     }
 }
+
+DetailComponent.propTypes = {
+    resource: PropTypes.shape({
+            name: PropTypes.string,
+            size: PropTypes.number,
+            createAt: PropTypes.number,
+            mime: PropTypes.string,
+        }
+    ),
+    width: PropTypes.number,
+};
+
+DetailComponent.defaultProps = {
+    resource: {
+        movieName: '',
+        size: 0,
+        createAt: 0,
+        mime: '',
+        dp: true,
+    },
+    width: 100,
+};
 
 export default DetailComponent;

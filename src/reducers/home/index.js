@@ -28,7 +28,6 @@ const initState = {
 Array.prototype.insertOrUpdateList = function (datas, judgeKey) {
     let newArray = this.slice();
     datas.forEach(data => {
-        console.log(data);
         let idx = -1;
         newArray.forEach((item, index) => {
             if (item[judgeKey] === data[judgeKey])

@@ -13,6 +13,7 @@
     "create-torrent": "^3.32.0",
     "enquire-js": "^0.2.1",
     "es6-shim": "^0.35.3",
+    "gitment": "0.0.3",
     "moment": "^2.22.2",
     "path": "^0.12.7",
     "pretty-bytes": "^5.1.0",

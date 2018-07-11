@@ -35,7 +35,7 @@ export default connect(
                 const GET_MOVIES = MovieAPI.GET_MOVIES;
                 let URL = `${GET_MOVIES.api}?${GET_MOVIES.PARAM_PAGE}=${page}&${GET_MOVIES.PARAM_SIZE}=10`;
                 if(isDownload)
-                    URL += `${GET_MOVIES.PARAM_IS_DOWNLOAD}=1`;
+                    URL += `&${GET_MOVIES.PARAM_IS_DOWNLOAD}=1`;
                 if(sortByTime)
                     URL = URL + `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
                 if(type)

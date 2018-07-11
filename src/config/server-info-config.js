@@ -1,11 +1,12 @@
+// https://jx.qjm253.cn/api
 const ServerConfig = {
-    protocol: 'http',
-    host: 'localhost',
+    protocol: 'https',
+    host: 'jx.qjm253.cn',
     port: 4897,
-    sub_domain: '',
+    sub_domain: '/api',
 };
 
-ServerConfig.BASE_URL = `${ServerConfig.protocol}://${ServerConfig.host}:${ServerConfig.port}${ServerConfig.sub_domain}`;
+ServerConfig.BASE_URL = `${ServerConfig.protocol}://${ServerConfig.host}${ServerConfig.sub_domain}`;
 
 const TorrentTransferServerConfig = {
     protocol: 'https',
@@ -17,12 +18,12 @@ const TorrentTransferServerConfig = {
 TorrentTransferServerConfig.BASE_URL = `${TorrentTransferServerConfig.protocol}://${TorrentTransferServerConfig.host}${TorrentTransferServerConfig.sub_domain}`;
 
 const StaticFileConfig = {
-    protocol: 'http',
-    host: 'localhost',
-    port: 9748,
-    sub_domain: '',
+    protocol: 'https',
+    host: 'jx.qjm253.cn',
+    port: 9749,
+    sub_domain: '/static',
 };
-StaticFileConfig.BASE_URL = `${StaticFileConfig.protocol}://${StaticFileConfig.host}:${StaticFileConfig.port}${StaticFileConfig.sub_domain}`;
+StaticFileConfig.BASE_URL = `${StaticFileConfig.protocol}://${StaticFileConfig.host}${StaticFileConfig.sub_domain}`;
 
 export {
     ServerConfig,

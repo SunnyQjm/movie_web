@@ -88,10 +88,11 @@ const MovieAPI = {
     },
     UPLOAD_FILE: {
         api: '/upload',
-        url: `http://${ServerConfig.host}:${ServerConfig.port}/upload`,
         PARAM_KEY: 'file',
     }
 };
+
+MovieAPI.UPLOAD_FILE.url = `${MovieAPI.BASE_URL}/upload`;
 
 const getMovieAxios = thunky(cb => {
     const instance = axios.create({
