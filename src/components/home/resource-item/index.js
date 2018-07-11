@@ -50,6 +50,8 @@ function getIconByMIME(mime) {
         return require('../img/ppt.png');
     else if(mime.startsWith('application/pdf'))
         return require('../img/pdf.png');
+    else if(mime.startsWith('image'))
+        return require('../img/picture.png');
     else
         return require('../img/file.png');
 }

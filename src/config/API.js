@@ -42,6 +42,17 @@ const MovieAPI = {
         PARAM_SIZE: 'size',                     //指定每页的大小
         PARAM_ORDER_PROP: 'orderProp',          //用哪个属性排序（可以取返回数据格式中的任一字段，比如你可以用createdAt字段）
         PARAM_ORDER: 'order',                   //排序的方式 “ASC” => 升序 “DESC” => 降序
+        /**
+         * video => 视频
+         * audio => 音频
+         * image => 图片
+         * application => 文档
+         */
+        PARAM_TYPE: 'type',                     //分类查询
+        TYPE_VIDEO: 'video',
+        TYPE_AUDIO: 'audio',
+        TYPE_IMAGE: 'image',
+        TYPE_APPLICATION: 'application',
     },
 
     /**

@@ -6,7 +6,11 @@ import styled from 'styled-components';
 import {
     T1
 } from '../base/base-component';
+import Spin from 'antd/lib/spin';
 import ResourceItem from './resource-item';
+import {
+    MovieAPI
+} from '../../config/API';
 
 const TabPane = Tabs.TabPane;
 const HomeBody = styled.div`
@@ -17,19 +21,71 @@ const ItemsBody = styled(InfiniteScroll)`
     flex-wrap: wrap;
 `;
 
-class HomeComponent extends React.Component{
-    constructor(props){
+function createItems(items, hasMore, loading, loadMore, key, isMobile) {
+    let Items = items.map((movie, index) => {
+        return <ResourceItem key={movie.id} file={movie}/>
+    });
+
+    let itemsBodyStyle = {
+
+    };
+    if(isMobile){
+        itemsBodyStyle.display = 'flex';
+        itemsBodyStyle.justifyContent = 'center';
+        itemsBodyStyle.alignItems = 'center';
+    }
+    return <TabPane tab={key} key={key}>
+        <ItemsBody
+            pageStart={0}
+            loadMore={page => {
+                loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO)
+            }}
+            hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
+            style={itemsBodyStyle}
+        >
+            {Items}
+        </ItemsBody>
+        {loading ? <Spin style={{
+            width: '100%',
+            margin: '0 auto',
+        }} tip={'Loading...'}/> : ''}
+    </TabPane>
+}
+class HomeComponent extends React.Component {
+    constructor(props) {
         super(props);
     }
-    componentDidMount(){
-        let {isMobile} = this.props;
-    }
 
-    render(){
-        let {items, loadMore, hasMore, loading} = this.props;
-        let movieItems = items.map((movie, index) => {
-            return <ResourceItem key={movie.id} file={movie}/>
-        });
+    render() {
+        let {allItems, allHasMore,
+            videoItems, videoHasMore,
+            audioItems, audioHasMore,
+            imageItems, imageHasMore,
+            applicationItems, applicationHasMore,
+            loadMore, loading,
+            isMobile} = this.props;
+        let AllItems = createItems(allItems, allHasMore, loading, page => {
+            loadMore(page, true, true)
+        }, '所有资源', isMobile);
+
+        let VideoItems = createItems(videoItems, videoHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
+        }, '视频', isMobile);
+
+        let AutioItems = createItems(audioItems, audioHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
+        }, '音频', isMobile);
+
+        let ImageItems = createItems(imageItems, imageHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
+        }, '图片', isMobile);
+
+        let ApplicationItems = createItems(applicationItems, applicationHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
+        }, '文档', isMobile);
+
+
+
         return (
             <HomeBody>
                 <BackTop/>
@@ -38,19 +94,12 @@ class HomeComponent extends React.Component{
                     textAlign: 'center',
                     marginBottom: '20px',
                 }}>RESOURCE CENTER</T1>
-                <Tabs tabPosition={'left'} type={'line'}>
-                    <TabPane tab={'所有资源'} key={'1'}>
-                        <ItemsBody
-                            pageStart={0}
-                            loadMore={loadMore}
-                            hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
-                            loader={<div className="loader">Loading ...</div>}>
-                            {movieItems}
-                        </ItemsBody>
-                    </TabPane>
-                    <TabPane tab={'已下载'} key={'2'}>
-                        B
-                    </TabPane>
+                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'}>
+                    {AllItems}
+                    {VideoItems}
+                    {AutioItems}
+                    {ImageItems}
+                    {ApplicationItems}
                 </Tabs>
             </HomeBody>
 
