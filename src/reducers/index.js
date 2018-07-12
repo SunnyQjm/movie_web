@@ -4,6 +4,7 @@ import HomeReducer from './home'
 import P2pShareReducer from './p2p-share';
 import UploadReducer from './upload';
 import DetailReducer from './detail';
+import VideoReducer from './video';
 
 import {
     combineReducers
@@ -16,4 +17,5 @@ export default combineReducers({
     P2pShareReducer,
     UploadReducer,
     DetailReducer,
+    VideoReducer,
 })

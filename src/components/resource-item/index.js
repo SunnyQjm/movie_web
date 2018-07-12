@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types'
 import {
     StaticFileConfig
-} from '../../../config/server-info-config';
+} from '../../config/server-info-config';
 import {
     getIconByMIME
-} from '../../../tool/icon-tool';
+} from '../../tool/icon-tool';
 
 const radius = '8px';
 
@@ -41,7 +41,7 @@ const CardTitle = styled.span`
 class ResourceItem extends React.Component {
 
     render() {
-        let {movieName, size, createAt, mime, downloadPath, percent, cover, isMobile} = this.props.resource;
+        let {movieName, size, createAt, mime, downloadPath, percent, cover, isMobile, introduction} = this.props.resource;
         let {onRemove, width} = this.props;
         let cardImageStyle = {
             width: width,

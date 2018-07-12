@@ -51,6 +51,7 @@ const MyDropDown = styled.div`
 
 const menuItems = [
     <MyItem key={LocalRouter.HOME}><Link to={LocalRouter.HOME}>首页</Link></MyItem>,
+    <MyItem key={LocalRouter.VIDEO}><Link to={LocalRouter.VIDEO}>影视</Link></MyItem>,
     <MyItem key={LocalRouter.UPLOAD}><Link to={LocalRouter.UPLOAD}>上传</Link></MyItem>,
     <MyItem key={LocalRouter.P2P_SHARE}><Link to={LocalRouter.P2P_SHARE}>P2P</Link></MyItem>
 ];

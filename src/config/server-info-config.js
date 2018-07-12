@@ -6,7 +6,17 @@ const ServerConfig = {
     sub_domain: '/api',
 };
 
-ServerConfig.BASE_URL = `${ServerConfig.protocol}://${ServerConfig.host}${ServerConfig.sub_domain}`;
+const TestServerConfig = {
+    protocol: 'http',
+    host: 'localhost',
+    port: 4897,
+    sub_domain: '',
+};
+
+// ServerConfig.BASE_URL = `${ServerConfig.protocol}://${ServerConfig.host}${ServerConfig.sub_domain}`;
+//test
+ServerConfig.BASE_URL = `${TestServerConfig.protocol}://${TestServerConfig.host}:${TestServerConfig.port}${TestServerConfig.sub_domain}`;
+
 
 const TorrentTransferServerConfig = {
     protocol: 'https',

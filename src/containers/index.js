@@ -4,6 +4,7 @@ import HomeContainer from './home';
 import P2pShareContainer from './p2p-share';
 import UploadContainer from './upload';
 import DetailContainer from './detail';
+import VideoContainer from './video';
 
 export {
     HeaderContainer,
@@ -12,4 +13,5 @@ export {
     P2pShareContainer,
     UploadContainer,
     DetailContainer,
+    VideoContainer,
 }

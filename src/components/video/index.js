@@ -25,7 +25,7 @@ const ItemsBody = styled(InfiniteScroll)`
 `;
 
 
-class HomeComponent extends React.Component {
+class VideoComponent extends React.Component {
     constructor(props) {
         super(props);
         this.createItems = this.createItems.bind(this);
@@ -66,32 +66,32 @@ class HomeComponent extends React.Component {
 
     render() {
         let {allItems, allHasMore,
-            videoItems, videoHasMore,
-            audioItems, audioHasMore,
-            imageItems, imageHasMore,
-            applicationItems, applicationHasMore,
+            // videoItems, videoHasMore,
+            // audioItems, audioHasMore,
+            // imageItems, imageHasMore,
+            // applicationItems, applicationHasMore,
             loadMore, loading,
             isMobile, activityTabKey,
             changeTab,} = this.props;
         let AllItems = this.createItems(allItems, allHasMore, loading, page => {
             loadMore(page, true, true)
-        }, '所有资源', isMobile);
+        }, '所有视频', isMobile);
 
-        let VideoItems = this.createItems(videoItems, videoHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
-        }, '视频', isMobile);
-
-        let AutioItems = this.createItems(audioItems, audioHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
-        }, '音频', isMobile);
-
-        let ImageItems = this.createItems(imageItems, imageHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
-        }, '图片', isMobile);
-
-        let ApplicationItems = this.createItems(applicationItems, applicationHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
-        }, '文档', isMobile);
+        // let VideoItems = this.createItems(videoItems, videoHasMore, loading, page => {
+        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
+        // }, '视频', isMobile);
+        //
+        // let AutioItems = this.createItems(audioItems, audioHasMore, loading, page => {
+        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
+        // }, '音频', isMobile);
+        //
+        // let ImageItems = this.createItems(imageItems, imageHasMore, loading, page => {
+        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
+        // }, '图片', isMobile);
+        //
+        // let ApplicationItems = this.createItems(applicationItems, applicationHasMore, loading, page => {
+        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
+        // }, '文档', isMobile);
 
 
         return (
@@ -104,10 +104,10 @@ class HomeComponent extends React.Component {
                 }}>RESOURCE CENTER</T1>
                 <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab} activeKey={activityTabKey}>
                     {AllItems}
-                    {VideoItems}
-                    {AutioItems}
-                    {ImageItems}
-                    {ApplicationItems}
+                    {/*{VideoItems}*/}
+                    {/*{AutioItems}*/}
+                    {/*{ImageItems}*/}
+                    {/*{ApplicationItems}*/}
                 </Tabs>
             </HomeBody>
 
@@ -115,4 +115,4 @@ class HomeComponent extends React.Component {
     }
 }
 
-export default withRouter(HomeComponent);
+export default withRouter(VideoComponent);

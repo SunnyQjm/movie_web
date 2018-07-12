@@ -17,6 +17,7 @@ import {
     P2pShareContainer,
     UploadContainer,
     DetailContainer,
+    VideoContainer,
 } from './containers'
 import {
     VertifyGitmentComponent,
@@ -79,6 +80,9 @@ class App extends Component {
                                 isMobile: isMobile,
                             })}/>
                             <Route key={'e'} path={'/vertify_gitcomment'} component={withPropsComponent(VertifyGitmentComponent, {
+                                isMobile: isMobile,
+                            })}/>
+                            <Route key={'f'} path={`${LocalRouter.VIDEO}`} component={withPropsComponent(VideoContainer, {
                                 isMobile: isMobile,
                             })}/>
                         </MyContent>

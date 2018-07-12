@@ -48,11 +48,12 @@ const CardImage = styled.div`
     align-items: center;
     border-radius: ${radius};
     background-size: cover;
+    margin: 10px 0;
 `;
 
-const CardTitle = styled.span`
-    font-size: 1.4em;
-    margin: 10px;
+const CardTitle = styled.p`
+    font-size: 1.2em;
+    font-weight: bold;
     text-align: center;
 `;
 const ItemTags = styled.div`
@@ -76,12 +77,33 @@ const OperatorButton = styled(Button)`
     font-size: 0.5em;
 `;
 
+
+const MovieBody = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+`;
+
+const MovideMainInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`;
+
+const MovieIntroduction = styled.span`
+    margin-left: 10px;
+`;
+
 class DetailComponent extends React.Component {
 
     static handleClip(e) {
         message.success('成功复制到剪切板');
         e.clearSelection();
     }
+
     componentDidMount() {
         let {match, getResourceById} = this.props;
         this.copyBoardMagnet = new ClipBoard(`#copy-magnet`);
@@ -91,14 +113,14 @@ class DetailComponent extends React.Component {
         getResourceById(match.params.id);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.copyBoardMagnet.destroy();
         this.copyBordDownloadLink.destroy();
     }
 
     render() {
         let resource = this.props.resource;
-        if(!resource.dp){
+        if (!resource.dp) {
             const gitalk = new Gitalk({
                 clientID: '18173fd8605b5c387012',
                 clientSecret: '680864c20e99ef281b12c427818e88a5d0383031',
@@ -108,7 +130,9 @@ class DetailComponent extends React.Component {
                 id: resource.id,      // Ensure uniqueness and length less than 50
                 distractionFreeMode: true  // Facebook-like distraction free mode
             });
-            gitalk.render('comments')
+            setTimeout(() => {
+                gitalk.render('comments');
+            }, 500)
         }
         let {movieName, size, createAt, mime, downloadPath, percent, cover} = resource;
         let {width, isMobile} = this.props;
@@ -128,8 +152,13 @@ class DetailComponent extends React.Component {
         let commentsStyle = {
             width: '800px',
         };
-        if(isMobile){
+        if (isMobile) {
             commentsStyle.width = '100%';
+        }
+
+        let movieBodyStyle = {};
+        if (isMobile) {
+            movieBodyStyle.flexDirection = 'column';
         }
         //取得文件列表中最大的文件作为主标题
         return (
@@ -140,18 +169,38 @@ class DetailComponent extends React.Component {
                     marginBottom: '20px',
                 }}>RESOURCE DETAIL</T1>
                 <TransCardBody {...this.props}>
-                    <CardImage style={cardImageStyle}>
-                        {
-                            !!cover ?
-                                ''
+                    <MovieBody style={movieBodyStyle}>
+                        <MovideMainInfo>
+                            <CardImage style={cardImageStyle}>
+                                {
+                                    !!cover ?
+                                        ''
+                                        :
+                                        <img src={getIconByMIME(mime)} alt="" style={{
+                                            width: width,
+                                            height: width,
+                                        }}/>
+                                }
+                            </CardImage>
+                            {!(resource && !!resource.introduction) ?
+                                <CardTitle> {movieName}</CardTitle>
                                 :
-                                <img src={getIconByMIME(mime)} alt="" style={{
-                                    width: width,
-                                    height: width,
-                                }}/>
-                        }
-                    </CardImage>
-                    < CardTitle> {movieName}</CardTitle>
+                                ''
+                            }
+                        </MovideMainInfo>
+                        <MovieIntroduction>
+                            {resource && !!resource.introduction ?
+                                <CardTitle> {movieName}</CardTitle>
+                                :
+                                ''
+                            }
+                            {resource && !!resource.introduction ?
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                :
+                                ''}
+                            {resource ? resource.introduction : ''}
+                        </MovieIntroduction>
+                    </MovieBody>
                     <ItemTags>
                         <Tag color={BaseColor.tag_color_3}>{new Moment(resource.createAt).format('YYYY-MM-DD')}</Tag>
                         <Tag color={BaseColor.tag_color_2}>{prettyBytes(resource.size ? resource.size : 0)}</Tag>
@@ -164,9 +213,14 @@ class DetailComponent extends React.Component {
                         }
                     </ItemTags>
                     <OperatorButtons>
-                        <OperatorButton disabled={!resource.isDownload}><a href={StaticFileConfig.BASE_URL + resource.downloadPath} download={movieName}>预览或下载</a></OperatorButton>
-                        <OperatorButton id={'copy-magnet'} disabled={!resource.isDownload} data-clipboard-text={StaticFileConfig.BASE_URL + resource.downloadPath}>复制下载链接</OperatorButton>
-                        <OperatorButton id={'copy-download-link'} disabled={(!resource.torrents || resource.magnets.length===0)} data-clipboard-text={resource.magnets && resource.magnets.length > 0 && resource.magnets[0]}>复制磁力链接</OperatorButton>
+                        <OperatorButton disabled={!resource.isDownload}><a
+                            href={StaticFileConfig.BASE_URL + resource.downloadPath}
+                            download={movieName}>预览或下载</a></OperatorButton>
+                        <OperatorButton id={'copy-magnet'} disabled={!resource.isDownload}
+                                        data-clipboard-text={StaticFileConfig.BASE_URL + resource.downloadPath}>复制下载链接</OperatorButton>
+                        <OperatorButton id={'copy-download-link'}
+                                        disabled={(!resource.torrents || resource.magnets.length === 0)}
+                                        data-clipboard-text={resource.magnets && resource.magnets.length > 0 && resource.magnets[0]}>复制磁力链接</OperatorButton>
                     </OperatorButtons>
                 </TransCardBody>
                 <div id={'comments'} style={commentsStyle}/>

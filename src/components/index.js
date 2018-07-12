@@ -5,6 +5,7 @@ import P2pShareComponent from './p2p-share';
 import UploadComponent from './upload';
 import DetailComponent from './detail';
 import VertifyGitmentComponent from './vertify-gitment';
+import VideoComponent from './video';
 
 export {
     FooterComponent,
@@ -14,4 +15,5 @@ export {
     UploadComponent,
     DetailComponent,
     VertifyGitmentComponent,
+    VideoComponent,
 }
