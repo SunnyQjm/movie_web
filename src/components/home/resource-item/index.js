@@ -41,14 +41,16 @@ const CardTitle = styled.span`
 class ResourceItem extends React.Component {
 
     render() {
-        let {movieName, size, createAt, mime, downloadPath, percent, cover} = this.props.resource;
+        let {movieName, size, createAt, mime, downloadPath, percent, cover, isMobile} = this.props.resource;
         let {onRemove, width} = this.props;
         let cardImageStyle = {
             width: width,
             height: width,
             borderStyle: 'none',
         };
-
+        let transCardBodyStyle = {
+            width: width,
+        };
         let cardImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6x0qGQamxaiAtVE-O8L5LVkC5wrT8Fe9AmKiJfk8bOpCj5mxZ4Q';
         if (cover) {
             cardImage = cover.startsWith('http') ? cover : StaticFileConfig.BASE_URL + cover;
@@ -58,9 +60,7 @@ class ResourceItem extends React.Component {
         }
         //取得文件列表中最大的文件作为主标题
         return (
-            <TransCardBody {...this.props} style={{
-                width: width,
-            }}>
+            <TransCardBody {...this.props} style={transCardBodyStyle} >
                 <CardImage style={cardImageStyle}>
                     {
                         !!cover ?

@@ -18,6 +18,9 @@ import {
     UploadContainer,
     DetailContainer,
 } from './containers'
+import {
+    VertifyGitmentComponent,
+} from './components';
 import store from './store';
 import styled from 'styled-components';
 import LocalRouter from './LocalRouter'
@@ -73,6 +76,9 @@ class App extends Component {
                                 isMobile: isMobile,
                             })}/>
                             <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`} component={withPropsComponent(DetailContainer, {
+                                isMobile: isMobile,
+                            })}/>
+                            <Route key={'e'} path={'/vertify_gitcomment'} component={withPropsComponent(VertifyGitmentComponent, {
                                 isMobile: isMobile,
                             })}/>
                         </MyContent>

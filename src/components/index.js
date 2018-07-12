@@ -4,6 +4,7 @@ import HomeComponent from './home';
 import P2pShareComponent from './p2p-share';
 import UploadComponent from './upload';
 import DetailComponent from './detail';
+import VertifyGitmentComponent from './vertify-gitment';
 
 export {
     FooterComponent,
@@ -12,4 +13,5 @@ export {
     P2pShareComponent,
     UploadComponent,
     DetailComponent,
+    VertifyGitmentComponent,
 }

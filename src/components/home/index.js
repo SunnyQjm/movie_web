@@ -33,18 +33,18 @@ class HomeComponent extends React.Component {
 
     createItems(items, hasMore, loading, loadMore, key, isMobile) {
         let Items = items.map((movie, index) => {
-            return <ResourceItem key={movie.id} resource={movie} onClick={() => {
+            return <ResourceItem width= {isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
-            }}/>
+            }} isMobile={isMobile}/>
         });
 
         let itemsBodyStyle = {
 
         };
         if(isMobile){
-            itemsBodyStyle.display = 'flex';
-            itemsBodyStyle.justifyContent = 'center';
-            itemsBodyStyle.alignItems = 'center';
+            // itemsBodyStyle.display = 'flex';
+            // itemsBodyStyle.justifyContent = 'center';
+            // itemsBodyStyle.alignItems = 'center';
         }
         return <TabPane tab={key} key={key}>
             <ItemsBody

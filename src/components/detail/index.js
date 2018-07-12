@@ -15,8 +15,8 @@ import Tag from 'antd/lib/tag';
 import Button from 'antd/lib/button';
 import prettyBytes from "pretty-bytes";
 import Moment from 'moment';
-import 'gitment/style/default.css'
-import Gitment from 'gitment'
+import 'gitalk/dist/gitalk.css'
+import Gitalk from 'gitalk'
 import ClipBoard from 'clipboard';
 import message from "antd/lib/message/index";
 
@@ -73,6 +73,7 @@ const OperatorButtons = styled.div`
 
 const OperatorButton = styled(Button)`
     margin: 5px;
+    font-size: 0.5em;
 `;
 
 class DetailComponent extends React.Component {
@@ -98,16 +99,16 @@ class DetailComponent extends React.Component {
     render() {
         let resource = this.props.resource;
         if(!resource.dp){
-            const gitment = new Gitment({
-                id: resource.id, // optional
-                owner: 'SunnyQjm',
+            const gitalk = new Gitalk({
+                clientID: '18173fd8605b5c387012',
+                clientSecret: '680864c20e99ef281b12c427818e88a5d0383031',
                 repo: 'movie_web',
-                oauth: {
-                    client_id: '18173fd8605b5c387012',
-                    client_secret: '680864c20e99ef281b12c427818e88a5d0383031',
-                },
+                owner: 'SunnyQjm',
+                admin: ['SunnyQjm'],
+                id: resource.id,      // Ensure uniqueness and length less than 50
+                distractionFreeMode: true  // Facebook-like distraction free mode
             });
-            gitment.render('comments')
+            gitalk.render('comments')
         }
         let {movieName, size, createAt, mime, downloadPath, percent, cover} = resource;
         let {width, isMobile} = this.props;
