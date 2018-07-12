@@ -5,4 +5,5 @@ export default {
     UPLOAD: '/upload',
     RESOURCE_DETAIL: '/detail',
     VIDEO: '/video',
+    LITTLE_TOOL: '/little_tool',
 }

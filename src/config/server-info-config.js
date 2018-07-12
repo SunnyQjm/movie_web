@@ -27,6 +27,17 @@ const TorrentTransferServerConfig = {
 
 TorrentTransferServerConfig.BASE_URL = `${TorrentTransferServerConfig.protocol}://${TorrentTransferServerConfig.host}${TorrentTransferServerConfig.sub_domain}`;
 
+const ShareWebsiteServerConfig = {
+    protocol: 'https',
+    host: 'movie.qjm253.cn',
+    port: 80,
+    sub_domain: '/statics',
+};
+
+ShareWebsiteServerConfig.BASE_URL = `${ShareWebsiteServerConfig.protocol}://${ShareWebsiteServerConfig.host}${ShareWebsiteServerConfig.sub_domain}`;
+
+
+
 const StaticFileConfig = {
     protocol: 'https',
     host: 'jx.qjm253.cn',
@@ -38,5 +49,6 @@ StaticFileConfig.BASE_URL = `${StaticFileConfig.protocol}://${StaticFileConfig.h
 export {
     ServerConfig,
     TorrentTransferServerConfig,
-    StaticFileConfig
+    StaticFileConfig,
+    ShareWebsiteServerConfig,
 }

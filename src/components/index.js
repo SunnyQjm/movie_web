@@ -6,6 +6,7 @@ import UploadComponent from './upload';
 import DetailComponent from './detail';
 import VertifyGitmentComponent from './vertify-gitment';
 import VideoComponent from './video';
+import LittleToolComponent from './little-tool';
 
 export {
     FooterComponent,
@@ -16,4 +17,5 @@ export {
     DetailComponent,
     VertifyGitmentComponent,
     VideoComponent,
+    LittleToolComponent,
 }

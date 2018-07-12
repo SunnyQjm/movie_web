@@ -39,11 +39,6 @@ class VideoComponent extends React.Component {
         });
 
         let itemsBodyStyle = {};
-        if (isMobile) {
-            // itemsBodyStyle.display = 'flex';
-            // itemsBodyStyle.justifyContent = 'center';
-            // itemsBodyStyle.alignItems = 'center';
-        }
         return <TabPane tab={key} key={key}>
             <ItemsBody
                 pageStart={0}
@@ -73,6 +68,7 @@ class VideoComponent extends React.Component {
             loadMore, loading,
             isMobile, activityTabKey,
             changeTab,
+            years
         } = this.props;
         let AllItems = this.createItems(allItems, allHasMore, loading, page => {
             loadMore(page, true, true)
@@ -97,14 +93,20 @@ class VideoComponent extends React.Component {
         let ScienceFictionItems = this.createItems(scienceFictionItems, scienceFictionHasMore, loading, page => {
             loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION);
         }, '科幻', isMobile);
+
+        let YearsItems = years.map(year => {
+           return this.createItems(this.props[`year${year}_items`], this.props[`year${year}_hasMore`], loading, page => {
+               loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_YEAR, year);
+           }, year, isMobile);
+        });
         return (
             <HomeBody>
                 <BackTop/>
-                <T1 style={{
-                    margin: '0 auto',
-                    textAlign: 'center',
-                    marginBottom: '20px',
-                }}>RESOURCE CENTER</T1>
+                {/*<T1 style={{*/}
+                    {/*margin: '0 auto',*/}
+                    {/*textAlign: 'center',*/}
+                    {/*marginBottom: '20px',*/}
+                {/*}}>RESOURCE CENTER</T1>*/}
                 <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab}
                       activeKey={activityTabKey}>
                     {AllItems}
@@ -115,6 +117,11 @@ class VideoComponent extends React.Component {
                             {ThrillerItems}
                             {AdventureItems}
                             {ScienceFictionItems}
+                        </Tabs>
+                    </TabPane>
+                    <TabPane tab={'时间'} key={'时间'}>
+                        <Tabs tabPosition={'top'} type={'card'}>
+                            {YearsItems}
                         </Tabs>
                     </TabPane>
                 </Tabs>

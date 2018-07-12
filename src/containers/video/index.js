@@ -26,7 +26,7 @@ export default connect(
     },
     (dispatch) => {
         return {
-            loadMore: (page, isDownload = false, sortByTime = true, category) => {
+            loadMore: (page, isDownload = false, sortByTime = true, category, year = 1997) => {
                 dispatch({
                     type: ACTION_VIDEO_BEGIN_LOADING,
                     category: category
@@ -38,37 +38,44 @@ export default connect(
                 if(sortByTime)
                     URL += `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
                 URL += `&${GET_MOVIES.PARAM_TYPE}=${MovieAPI.GET_MOVIES.TYPE_VIDEO}`;
-                if(category)
+                if(category && category !== MovieAPI.GET_MOVIES.CATEGORY_YEAR)
                     URL += `&filterProps=category&filterValues=${category}`;
+                else if (category === MovieAPI.GET_MOVIES.CATEGORY_YEAR)
+                    URL += `&filterProps=releaseTime&filterValues=${year}`;
                 getMovieAxios(axois => {
                     axois.get(URL)
                         .then(res => {
                             dispatch({
                                 type: ACTION_VIDEO_LOADING_FINISH,
-                                category: category
+                                category: category,
+                                year: year
                             });
                             let items = res.data.data;
                             if (!items || items.length === 0) {       //没有获取到数据说明说有数据都获取完毕了
                                 dispatch({
                                     type: ACTION_VIDEO_NO_MORE,
-                                    category: category
+                                    category: category,
+                                    year: year
                                 });
                             } else {
                                 dispatch({
                                     type: ACTION_VIDEO_ADD_ITEMS,
                                     data: items,
-                                    category: category
+                                    category: category,
+                                    year: year
                                 })
                             }
                         })
                         .catch(err => {
                             dispatch({
                                 type: ACTION_VIDEO_NO_MORE,
-                                category: category
+                                category: category,
+                                year: year
                             });
                             dispatch({
                                 type: ACTION_VIDEO_LOADING_FINISH,
-                                category: category
+                                category: category,
+                                year: year
                             });
                             console.log(err);
                             message.info('获取错误')

@@ -18,6 +18,7 @@ import {
     UploadContainer,
     DetailContainer,
     VideoContainer,
+    LittleToolContainer,
 } from './containers'
 import {
     VertifyGitmentComponent,
@@ -83,6 +84,9 @@ class App extends Component {
                                 isMobile: isMobile,
                             })}/>
                             <Route key={'f'} path={`${LocalRouter.VIDEO}`} component={withPropsComponent(VideoContainer, {
+                                isMobile: isMobile,
+                            })}/>
+                            <Route key={'g'} path={`${LocalRouter.LITTLE_TOOL}`} component={withPropsComponent(LittleToolContainer, {
                                 isMobile: isMobile,
                             })}/>
                         </MyContent>

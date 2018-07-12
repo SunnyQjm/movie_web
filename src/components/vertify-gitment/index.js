@@ -1,6 +1,15 @@
 import React from 'react';
 import 'gitalk/dist/gitalk.css'
 import Gitalk from 'gitalk'
+import styled from 'styled-components';
+
+
+const VertifyBody = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 
 class VertifyGitmentComponent extends React.Component{
     componentDidMount(){
@@ -22,10 +31,9 @@ class VertifyGitmentComponent extends React.Component{
             width: '800px',
         };
         return (
-            <div id={'comments'}>
-                asdf
+            <VertifyBody>
                 <div id={'comments'} style={commentsStyle}/>
-            </div>
+            </VertifyBody>
         )
     }
 }

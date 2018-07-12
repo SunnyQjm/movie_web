@@ -58,6 +58,8 @@ const MovieAPI = {
         CATEGORY_THRILLER: '惊悚',
         CATEGORY_ADVENTURE: '冒险',
         CATEGORY_SCIENCE_FICTION: '科幻',
+        CATEGORY_YEAR: 'CATEGORY_YEAR',     //这个类别表示的是一个时间ACTION
+
     },
 
     /**
