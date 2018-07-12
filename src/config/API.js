@@ -53,6 +53,11 @@ const MovieAPI = {
         TYPE_AUDIO: 'audio',
         TYPE_IMAGE: 'image',
         TYPE_APPLICATION: 'application',
+        CATEGORY_ACT: '动作',
+        CATEGORY_LOVE: '爱情',
+        CATEGORY_THRILLER: '惊悚',
+        CATEGORY_ADVENTURE: '冒险',
+        CATEGORY_SCIENCE_FICTION: '科幻',
     },
 
     /**

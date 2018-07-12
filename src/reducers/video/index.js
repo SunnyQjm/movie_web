@@ -5,13 +5,32 @@ import {
     ACTION_VIDEO_BEGIN_LOADING,
     ACTION_VIDEO_ADD_ITEMS,
 } from '../../ActionType';
+import {
+    MovieAPI
+} from '../../config/API';
 
 const initState = {
     allItems: [],
     allHasMore: true,
+
+    /**
+     * 分类
+     */
+    actItems: [],
+    actHashMore: true,
+    loveItems: [],
+    loveHasMore: true,
+    thrillerItems: [],
+    thrillerHasMore: true,
+    adventureItems: [],
+    adventureHasMore: true,
+    scienceFictionItems: [],
+    scienceFictionHasMore: true,
+
     loading: false,
     activityTabKey: '所有视频',
 };
+
 
 Array.prototype.insertOrUpdateList = function (datas, judgeKey) {
     let newArray = this.slice();
@@ -34,28 +53,32 @@ const VideoReducer = (state = initState, action) => {
     let newState = state;
     switch (action.type) {
         case ACTION_VIDEO_ADD_ITEMS:
-            if (!action.toType)
+            if (!action.category)
                 newState.allItems = newState.allItems.insertOrUpdateList(action.data, 'id');
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_VIDEO)
-            //     newState.videoItems = newState.videoItems.insertOrUpdateList(action.data, 'id');
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_APPLICATION)
-            //     newState.applicationItems = newState.applicationItems.insertOrUpdateList(action.data, 'id');
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_AUDIO)
-            //     newState.audioItems = newState.audioItems.insertOrUpdateList(action.data, 'id');
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_IMAGE)
-            //     newState.imageItems = newState.imageItems.insertOrUpdateList(action.data, 'id');
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ACT)
+                newState.actItems = newState.actItems.insertOrUpdateList(action.data, 'id');
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_LOVE)
+                newState.loveItems = newState.loveItems.insertOrUpdateList(action.data, 'id');
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_THRILLER)
+                newState.thrillerItems = newState.thrillerItems.insertOrUpdateList(action.data, 'id');
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE)
+                newState.adventureItems = newState.adventureItems.insertOrUpdateList(action.data, 'id');
+            else if(action.category === MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
+                newState.scienceFictionItems = newState.scienceFictionItems.insertOrUpdateList(action.data, 'id');
             break;
         case ACTION_VIDEO_NO_MORE:
-            if (!action.toType)
+            if (!action.category)
                 newState.allHasMore = false;
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_VIDEO)
-            //     newState.videoHasMore = false;
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_APPLICATION)
-            //     newState.applicationHasMore = false;
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_AUDIO)
-            //     newState.audioHasMore = false;
-            // else if (action.toType === MovieAPI.GET_MOVIES.TYPE_IMAGE)
-            //     newState.imageHasMore = false;
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ACT)
+                newState.actHashMore = false;
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_LOVE)
+                newState.loveHasMore = false;
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_THRILLER)
+                newState.thrillerHasMore = false;
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE)
+                newState.adventureHasMore = false;
+            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
+                newState.scienceFictionHasMore = false;
             break;
         case ACTION_VIDEO_BEGIN_LOADING:
             newState.loading = true;

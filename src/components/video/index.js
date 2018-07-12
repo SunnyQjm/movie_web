@@ -33,15 +33,13 @@ class VideoComponent extends React.Component {
 
     createItems(items, hasMore, loading, loadMore, key, isMobile) {
         let Items = items.map((movie, index) => {
-            return <ResourceItem width= {isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
+            return <ResourceItem width={isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
             }} isMobile={isMobile}/>
         });
 
-        let itemsBodyStyle = {
-
-        };
-        if(isMobile){
+        let itemsBodyStyle = {};
+        if (isMobile) {
             // itemsBodyStyle.display = 'flex';
             // itemsBodyStyle.justifyContent = 'center';
             // itemsBodyStyle.alignItems = 'center';
@@ -65,35 +63,40 @@ class VideoComponent extends React.Component {
     }
 
     render() {
-        let {allItems, allHasMore,
-            // videoItems, videoHasMore,
-            // audioItems, audioHasMore,
-            // imageItems, imageHasMore,
-            // applicationItems, applicationHasMore,
+        let {
+            allItems, allHasMore,
+            actItems, actHashMore,
+            loveItems, loveHasMore,
+            thrillerItems, thrillerHasMore,
+            adventureItems, adventureHasMore,
+            scienceFictionItems, scienceFictionHasMore,
             loadMore, loading,
             isMobile, activityTabKey,
-            changeTab,} = this.props;
+            changeTab,
+        } = this.props;
         let AllItems = this.createItems(allItems, allHasMore, loading, page => {
             loadMore(page, true, true)
         }, '所有视频', isMobile);
 
-        // let VideoItems = this.createItems(videoItems, videoHasMore, loading, page => {
-        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
-        // }, '视频', isMobile);
-        //
-        // let AutioItems = this.createItems(audioItems, audioHasMore, loading, page => {
-        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
-        // }, '音频', isMobile);
-        //
-        // let ImageItems = this.createItems(imageItems, imageHasMore, loading, page => {
-        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
-        // }, '图片', isMobile);
-        //
-        // let ApplicationItems = this.createItems(applicationItems, applicationHasMore, loading, page => {
-        //     loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
-        // }, '文档', isMobile);
+        let ActItems = this.createItems(actItems, actHashMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_ACT);
+        }, '动作', isMobile);
 
+        let LoveItems = this.createItems(loveItems, loveHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_LOVE);
+        }, '爱情', isMobile);
+        //
+        let ThrillerItems = this.createItems(thrillerItems, thrillerHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_THRILLER);
+        }, '惊悚', isMobile);
 
+        let AdventureItems = this.createItems(adventureItems, adventureHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE);
+        }, '冒险', isMobile);
+
+        let ScienceFictionItems = this.createItems(scienceFictionItems, scienceFictionHasMore, loading, page => {
+            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION);
+        }, '科幻', isMobile);
         return (
             <HomeBody>
                 <BackTop/>
@@ -102,12 +105,18 @@ class VideoComponent extends React.Component {
                     textAlign: 'center',
                     marginBottom: '20px',
                 }}>RESOURCE CENTER</T1>
-                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab} activeKey={activityTabKey}>
+                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab}
+                      activeKey={activityTabKey}>
                     {AllItems}
-                    {/*{VideoItems}*/}
-                    {/*{AutioItems}*/}
-                    {/*{ImageItems}*/}
-                    {/*{ApplicationItems}*/}
+                    <TabPane tab={'类别'} key={'类别'}>
+                        <Tabs tabPosition={'top'} type={'card'}>
+                            {ActItems}
+                            {LoveItems}
+                            {ThrillerItems}
+                            {AdventureItems}
+                            {ScienceFictionItems}
+                        </Tabs>
+                    </TabPane>
                 </Tabs>
             </HomeBody>
 

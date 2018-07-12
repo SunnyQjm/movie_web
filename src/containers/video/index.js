@@ -26,47 +26,49 @@ export default connect(
     },
     (dispatch) => {
         return {
-            loadMore: (page, isDownload = false, sortByTime = true, type) => {
+            loadMore: (page, isDownload = false, sortByTime = true, category) => {
                 dispatch({
                     type: ACTION_VIDEO_BEGIN_LOADING,
-                    toType: type
+                    category: category
                 });
                 const GET_MOVIES = MovieAPI.GET_MOVIES;
                 let URL = `${GET_MOVIES.api}?${GET_MOVIES.PARAM_PAGE}=${page}&${GET_MOVIES.PARAM_SIZE}=10`;
                 // if(isDownload)
                 //     URL += `&${GET_MOVIES.PARAM_IS_DOWNLOAD}=1`;
                 if(sortByTime)
-                    URL = URL + `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
-                URL = URL + `&${GET_MOVIES.PARAM_TYPE}=${MovieAPI.GET_MOVIES.TYPE_VIDEO}`;
+                    URL += `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
+                URL += `&${GET_MOVIES.PARAM_TYPE}=${MovieAPI.GET_MOVIES.TYPE_VIDEO}`;
+                if(category)
+                    URL += `&filterProps=category&filterValues=${category}`;
                 getMovieAxios(axois => {
                     axois.get(URL)
                         .then(res => {
                             dispatch({
                                 type: ACTION_VIDEO_LOADING_FINISH,
-                                toType: type
+                                category: category
                             });
                             let items = res.data.data;
                             if (!items || items.length === 0) {       //没有获取到数据说明说有数据都获取完毕了
                                 dispatch({
                                     type: ACTION_VIDEO_NO_MORE,
-                                    toType: type
+                                    category: category
                                 });
                             } else {
                                 dispatch({
                                     type: ACTION_VIDEO_ADD_ITEMS,
                                     data: items,
-                                    toType: type
+                                    category: category
                                 })
                             }
                         })
                         .catch(err => {
                             dispatch({
                                 type: ACTION_VIDEO_NO_MORE,
-                                toType: type
+                                category: category
                             });
                             dispatch({
                                 type: ACTION_VIDEO_LOADING_FINISH,
-                                toType: type
+                                category: category
                             });
                             console.log(err);
                             message.info('获取错误')

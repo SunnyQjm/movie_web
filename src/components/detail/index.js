@@ -118,7 +118,7 @@ class DetailComponent extends React.Component {
         this.copyBordDownloadLink.destroy();
     }
 
-    render() {
+    componentDidUpdate() {
         let resource = this.props.resource;
         if (!resource.dp) {
             const gitalk = new Gitalk({
@@ -130,10 +130,12 @@ class DetailComponent extends React.Component {
                 id: resource.id,      // Ensure uniqueness and length less than 50
                 distractionFreeMode: true  // Facebook-like distraction free mode
             });
-            setTimeout(() => {
-                gitalk.render('comments');
-            }, 500)
+            gitalk.render('comments');
         }
+    }
+
+    render() {
+        let resource = this.props.resource;
         let {movieName, size, createAt, mime, downloadPath, percent, cover} = resource;
         let {width, isMobile} = this.props;
         let cardImageStyle = {
