@@ -66,7 +66,7 @@ class App extends Component {
                     <AppBody style={{
                         minHeight: '100%',
                     }}>
-                        <HeaderContainer/>
+                        <HeaderContainer isMobile={isMobile} />
                         <MyContent>
                             <Route key={'a'} exact path={LocalRouter.HOME} render={withPropsComponent(HomeContainer, {
                                 isMobile: isMobile

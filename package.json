@@ -20,6 +20,7 @@
     "pretty-bytes": "^5.1.0",
     "prop-types": "^15.6.2",
     "rc-queue-anim": "^1.6.5",
+    "rc-tween-one": "^2.2.2",
     "rc-upload": "^2.5.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

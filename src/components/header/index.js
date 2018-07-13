@@ -3,13 +3,15 @@ import React from 'react'
 import Menu from 'antd/lib/menu';
 import Icon from 'antd/lib/icon';
 import Dropdown from 'antd/lib/dropdown';
-import message from 'antd/lib/message';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
     Link
 } from 'react-router-dom'
 import LocalRouter from '../../LocalRouter'
+import {
+    BaseColor
+} from '../base/base-component';
 
 const {Item} = Menu;
 
@@ -49,20 +51,14 @@ const MyDropDown = styled.div`
 
 
 
-const menuItems = [
-    <MyItem key={LocalRouter.HOME}><Link to={LocalRouter.HOME}>首页</Link></MyItem>,
-    <MyItem key={LocalRouter.VIDEO}><Link to={LocalRouter.VIDEO}>影视</Link></MyItem>,
-    <MyItem key={LocalRouter.LITTLE_TOOL}><Link to={LocalRouter.LITTLE_TOOL}>推荐</Link></MyItem>,
-    <MyItem key={LocalRouter.UPLOAD}><Link to={LocalRouter.UPLOAD}>上传</Link></MyItem>,
-    <MyItem key={LocalRouter.P2P_SHARE}><Link to={LocalRouter.P2P_SHARE}>P2P</Link></MyItem>
 
-];
 
 class Nav extends React.Component {
 
     constructor(props){
         super(props);
         this.handleMobileMenuClick = this.handleMobileMenuClick.bind(this);
+        this.dealOnMenuItemClick = this.dealOnMenuItemClick.bind(this);
     }
 
     handleMobileMenuClick(e){
@@ -70,15 +66,48 @@ class Nav extends React.Component {
         onSelect && onSelect(e);
     }
 
-    render() {
-        const {isMobile, onSelect} = this.props;
+    componentDidMount(){
+        let {changeSelectedKey} = this.props;
         // 根据当前地址栏的URL，判断当前应该是哪个菜单项被选中
         let selectedKey = '/' + document.location.pathname.split('/').pop();
+        changeSelectedKey({
+            key: selectedKey
+        });
+    }
+
+    dealOnMenuItemClick(key){
+        let {changeSelectedKey} = this.props;
+        changeSelectedKey({
+            key: key
+        });
+    }
+
+    render() {
+        const {isMobile, changeSelectedKey, selectedKey} = this.props;
+        console.log(selectedKey);
+        console.log('what?');
+        const menuItems = [
+            <MyItem key={LocalRouter.HOME} onClick={() => {
+                this.dealOnMenuItemClick(LocalRouter.HOME)
+            }}><Link to={LocalRouter.HOME}>首页</Link></MyItem>,
+            <MyItem key={LocalRouter.VIDEO} onClick={() => {
+                this.dealOnMenuItemClick(LocalRouter.VIDEO)
+            }}><Link to={LocalRouter.VIDEO}>影视</Link></MyItem>,
+            <MyItem key={LocalRouter.LITTLE_TOOL} onClick={() => {
+                this.dealOnMenuItemClick(LocalRouter.LITTLE_TOOL)
+            }}><Link to={LocalRouter.LITTLE_TOOL}>推荐</Link></MyItem>,
+            <MyItem key={LocalRouter.UPLOAD} onClick={() => {
+                this.dealOnMenuItemClick(LocalRouter.UPLOAD)
+            }}><Link to={LocalRouter.UPLOAD}>上传</Link></MyItem>,
+            <MyItem key={LocalRouter.P2P_SHARE} onClick={() => {
+                this.dealOnMenuItemClick(LocalRouter.P2P_SHARE)
+            }}><Link to={LocalRouter.P2P_SHARE}>P2P</Link></MyItem>
+
+        ];
         let dropDownMenu = (
             <Menu
                 theme={'light'}
                 selectedKeys={[selectedKey]}
-                onClick={this.handleMobileMenuClick}
             >
                 {menuItems}
             </Menu>
@@ -92,7 +121,9 @@ class Nav extends React.Component {
                     color: 'white',
                     fontSize: '1.8em'
                 }}>
-                    <Icon type="bars"/>
+                    <Icon type="bars" style={{
+                        color: BaseColor.color_apptheme
+                    }}/>
                 </span>
                 </Dropdown>
             </MyDropDown>
@@ -100,8 +131,7 @@ class Nav extends React.Component {
             <MyMenu
                 theme="light"
                 mode="horizontal"
-                defaultSelectedKeys={[selectedKey]}
-                onSelect={onSelect}
+                selectedKeys={[selectedKey]}
             >
                 {menuItems}
             </MyMenu>;

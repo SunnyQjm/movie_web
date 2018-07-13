@@ -40,8 +40,9 @@ const UploadBody = styled(BaseHoverFloatDiv)`
     background-color: ${BaseColor.color_apptheme};
     color: white;
     border-radius: 10px;
-    height: 300px;
-    width: 500px;
+    max-height: 300px;
+    max-width: 500px;
+    padding: 50px;
 `;
 
 const props = {
@@ -145,9 +146,12 @@ class UploadComponent extends React.Component {
                                     marginBottom: '10px',
                                 }}/>
                                 <span style={{
-                                    fontSize: '1.8em'
+                                    fontSize: '1.8em',
+                                    textAlign: 'center',
                                 }}>点击此处或拖拽到此上传</span>
-                                <span>(上传过程中请不要切换到本站点的其他功能模块，否则传输过程会中断)</span>
+                                <span style={{
+                                    textAlign: 'center',
+                                }}>上传过程中请不要切换到本站点的其他功能模块，否则传输过程会中断</span>
                             </UploadBody>
                         </Upload>
 

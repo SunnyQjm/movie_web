@@ -38,7 +38,7 @@ const CategoryItemTitle = styled.a`
     font-size: 1.4em;
     font-weight: bold;
     text-align: center;
-    margin: 50px 0;
+    margin: 20px 0;
 `;
 
 const CategoryItemContent = styled.div`
@@ -48,45 +48,51 @@ const CategoryItemContent = styled.div`
 
 class LittleToolComponent extends React.Component {
 
-    componentDidMount(){
+    componentDidMount() {
         let {initAllWebsites, category} = this.props;
         initAllWebsites(category);
     }
+
     render() {
         let {category, isMobile} = this.props;
-        console.log(category);
         let Links = category.map(category => {
-            return <Link href={`#${category}`} title={category}/>
+            return <Link key={category} href={`#${category}`} title={category}/>
         });
-        console.log(ShareWebsiteServerConfig.BASE_URL);
         let contents = category.map(category => {
             let websites = this.props[category];
             let websiteItems = websites.map(website => {
-               return  <LittleToolItem width={isMobile ? 80 : 200} key={website.website} resource={website} onClick={() => {
-                   window.open(website.website);
-               }} isMobile={isMobile} staticPath={ShareWebsiteServerConfig.BASE_URL + '/'}/>
+                return <LittleToolItem width={isMobile ? 80 : 200} key={website.website} resource={website}
+                                       onClick={() => {
+                                           window.open(website.website);
+                                       }} isMobile={isMobile} staticPath={ShareWebsiteServerConfig.BASE_URL + '/'}/>
             });
-            return <CategoryItem >
-                <CategoryItemTitle id={category}>{category}</CategoryItemTitle>
-                <CategoryItemContent>
-                    {websiteItems}
-                </CategoryItemContent>
-            </CategoryItem>
+            return websiteItems.length > 0 ?
+                <CategoryItem key={category}>
+                    <CategoryItemTitle id={category}>{category}</CategoryItemTitle>
+                    <CategoryItemContent>
+                        {websiteItems}
+                    </CategoryItemContent>
+                </CategoryItem>
+                :
+                '';
         });
         return (
             <LittleToolBody>
-
-
                 <LittleToolContent id={'scroll-content'}>
                     {contents}
                 </LittleToolContent>
-                <AnchorBody >
-                    <Anchor style={{
-                        backgroundColor: '#fff0',
-                    }} offsetTop={50}>
-                        {Links}
-                    </Anchor>
-                </AnchorBody>
+                {
+                    isMobile ?
+                        ''
+                        :
+                        <AnchorBody>
+                            <Anchor style={{
+                                backgroundColor: '#fff0',
+                            }} offsetTop={50}>
+                                {Links}
+                            </Anchor>
+                        </AnchorBody>
+                }
             </LittleToolBody>
         );
     }
