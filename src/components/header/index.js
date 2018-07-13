@@ -12,6 +12,9 @@ import LocalRouter from '../../LocalRouter'
 import {
     BaseColor
 } from '../base/base-component';
+import {
+    SearchComponent
+} from '../index'
 
 const {Item} = Menu;
 
@@ -50,23 +53,20 @@ const MyDropDown = styled.div`
 `;
 
 
-
-
-
 class Nav extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.handleMobileMenuClick = this.handleMobileMenuClick.bind(this);
         this.dealOnMenuItemClick = this.dealOnMenuItemClick.bind(this);
     }
 
-    handleMobileMenuClick(e){
+    handleMobileMenuClick(e) {
         const {onSelect} = this.props;
         onSelect && onSelect(e);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         let {changeSelectedKey} = this.props;
         // 根据当前地址栏的URL，判断当前应该是哪个菜单项被选中
         let selectedKey = '/' + document.location.pathname.split('/').pop();
@@ -75,7 +75,7 @@ class Nav extends React.Component {
         });
     }
 
-    dealOnMenuItemClick(key){
+    dealOnMenuItemClick(key) {
         let {changeSelectedKey} = this.props;
         changeSelectedKey({
             key: key
@@ -83,9 +83,7 @@ class Nav extends React.Component {
     }
 
     render() {
-        const {isMobile, changeSelectedKey, selectedKey} = this.props;
-        console.log(selectedKey);
-        console.log('what?');
+        const {isMobile, selectedKey} = this.props;
         const menuItems = [
             <MyItem key={LocalRouter.HOME} onClick={() => {
                 this.dealOnMenuItemClick(LocalRouter.HOME)
@@ -141,10 +139,21 @@ class Nav extends React.Component {
                     <img src={require('../../img/icon.png')} style={{
                         width: '30px',
                         height: '30px',
-                        marginRight: '20px'
                     }}/>
                 </Logo>
+                {
+                    isMobile ?
+                        <SearchComponent/>
+                        :
+                        ''
+                }
                 {menu}
+                {
+                    isMobile ?
+                        ''
+                        :
+                        <SearchComponent placeholder={'搜索资源'}/>
+                }
             </Header>
         );
     }
@@ -159,7 +168,8 @@ Nav.propTypes = {
 Nav.defaultProps = {
     isMobile: false,
     defaultSelectedKey: LocalRouter.HOME,
-    onSelect: (item, key, selectedKeys ) => {}
+    onSelect: (item, key, selectedKeys) => {
+    }
 };
 
 

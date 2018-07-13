@@ -7,6 +7,9 @@ import {
 import {
     getIconByMIME
 } from '../../tool/icon-tool';
+import TweenOne from 'rc-tween-one';
+import {BaseColor} from "../base/base-component";
+
 
 const radius = '8px';
 
@@ -38,8 +41,43 @@ const CardTitle = styled.span`
     text-align: center;
 `;
 
-class ResourceItem extends React.Component {
+const CardDescription = styled.div`
+    color: white;
+    width: 100%;
+    max-height: 100%;
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    word-break: break-all;
+    background: ${BaseColor.gray}
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+`;
 
+class ResourceItem extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            hover: false
+        };
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    }
+
+    handleMouseEnter() {
+        this.setState({
+            hover: true
+        });
+    }
+
+    handleMouseLeave() {
+        this.setState({
+            hover: false
+        });
+    }
     render() {
         let {movieName, size, createAt, mime, downloadPath, percent, cover, isMobile, introduction, staticPath} = this.props.resource;
         let {onRemove, width} = this.props;
@@ -60,7 +98,8 @@ class ResourceItem extends React.Component {
         }
         //取得文件列表中最大的文件作为主标题
         return (
-            <TransCardBody {...this.props} style={transCardBodyStyle} >
+            <TransCardBody {...this.props} style={transCardBodyStyle} onMouseEnter={this.handleMouseEnter}
+                           onMouseLeave={this.handleMouseLeave}>
                 <CardImage style={cardImageStyle}>
                     {
                         !!cover ?
@@ -70,6 +109,21 @@ class ResourceItem extends React.Component {
                                 width: width / 2,
                                 height: width / 2,
                             }}/>
+                    }
+                    {
+                        this.state.hover ?
+                            <TweenOne animation={{
+                                height: '100%',
+                                opacity: 0.8,
+                            }} style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: 0,
+                            }}>
+                                <CardDescription>{introduction}</CardDescription>
+                            </TweenOne>
+                            :
+                            ''
                     }
                 </CardImage>
 

@@ -7,6 +7,7 @@ import DetailComponent from './detail';
 import VertifyGitmentComponent from './vertify-gitment';
 import VideoComponent from './video';
 import LittleToolComponent from './little-tool';
+import SearchComponent from './search'
 
 export {
     FooterComponent,
@@ -18,4 +19,5 @@ export {
     VertifyGitmentComponent,
     VideoComponent,
     LittleToolComponent,
+    SearchComponent,
 }
