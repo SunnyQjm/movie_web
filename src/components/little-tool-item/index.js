@@ -8,21 +8,18 @@ import {
 } from '../base';
 
 class LittleToolItem extends React.Component {
-
-
     render() {
         let {title, cover, description, website,} = this.props.resource;
-        let {onRemove, width, isMobile} = this.props;
         if(cover)
             cover = cover.startsWith('http') ? cover : ShareWebsiteServerConfig.BASE_URL + '/' + cover;
         //取得文件列表中最大的文件作为主标题
         return (
-            <BaseResourceItem resource={{
+            <BaseResourceItem {...this.props} resource={{
                 title: title,
                 cover: cover,
                 introduction: description,
                 mime: '',
-            }} onRemove={onRemove} width={width} isMobile={isMobile}/>
+            }}/>
         )
     }
 }

@@ -11,24 +11,6 @@ initState.category.forEach(category => {
    initState[category] = [];
 });
 
-Array.prototype.insertOrUpdateList = function (datas, judgeKey) {
-    let newArray = this.slice();
-    datas.forEach(data => {
-        let idx = -1;
-        newArray.forEach((item, index) => {
-            if (item[judgeKey] === data[judgeKey])
-                idx = index;
-        });
-        if (idx === -1) {
-            newArray.push(data);
-        } else {
-            newArray[idx] = data;
-        }
-    });
-    return newArray;
-};
-
-
 /**
  <Link href="#test1" title="科技数码"/>
  <Link href="#test2" title="工具"/>

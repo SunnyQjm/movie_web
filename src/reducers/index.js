@@ -6,10 +6,27 @@ import UploadReducer from './upload';
 import DetailReducer from './detail';
 import VideoReducer from './video';
 import LittleToolReducer from './little-tool';
-
+import SearchResultReducer from "./search-result";
 import {
     combineReducers
 } from 'redux'
+
+Array.prototype.insertOrUpdateList = function (datas, judgeKey) {
+    let newArray = this.slice();
+    datas.forEach(data => {
+        let idx = -1;
+        newArray.forEach((item, index) => {
+            if (item[judgeKey] === data[judgeKey])
+                idx = index;
+        });
+        if (idx === -1) {
+            newArray.push(data);
+        } else {
+            newArray[idx] = data;
+        }
+    });
+    return newArray;
+};
 
 export default combineReducers({
     HeaderReducer,
@@ -20,4 +37,5 @@ export default combineReducers({
     DetailReducer,
     VideoReducer,
     LittleToolReducer,
+    SearchResultReducer,
 })

@@ -55,8 +55,8 @@ const MyDropDown = styled.div`
 
 class Nav extends React.Component {
 
-    constructor(props) {
-        super(props);
+    constructor(props, context) {
+        super(props, context);
         this.handleMobileMenuClick = this.handleMobileMenuClick.bind(this);
         this.dealOnMenuItemClick = this.dealOnMenuItemClick.bind(this);
     }
@@ -133,6 +133,10 @@ class Nav extends React.Component {
             >
                 {menuItems}
             </MyMenu>;
+
+        let searchComponent = <SearchComponent placeholder={'搜索资源'} onSearch={(value) => {
+            this.props.history.push(`/search/${value}`)
+        }}/>;
         return (
             <Header>
                 <Logo>
@@ -143,7 +147,7 @@ class Nav extends React.Component {
                 </Logo>
                 {
                     isMobile ?
-                        <SearchComponent/>
+                        searchComponent
                         :
                         ''
                 }
@@ -152,7 +156,7 @@ class Nav extends React.Component {
                     isMobile ?
                         ''
                         :
-                        <SearchComponent placeholder={'搜索资源'}/>
+                        searchComponent
                 }
             </Header>
         );

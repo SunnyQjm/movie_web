@@ -6,6 +6,7 @@ import UploadContainer from './upload';
 import DetailContainer from './detail';
 import VideoContainer from './video';
 import LittleToolContainer from './little-tool';
+import SearchResultContainer from './search-result';
 
 export {
     HeaderContainer,
@@ -16,4 +17,5 @@ export {
     DetailContainer,
     VideoContainer,
     LittleToolContainer,
+    SearchResultContainer,
 }

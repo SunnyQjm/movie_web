@@ -18,6 +18,24 @@ const TorrentTransferAPI = {
     GET_WEBSITE: {
         api: '/getWebsite',
         PARAM_CATEGORY: 'category'
+    },
+    QUERY_WEBSITE: {
+        api: '/queryShareWebsite',
+        PARAM_KEY_WORDS: 'keywords',
+        PARAM_PAGE: 'page',
+        PARAM_SIZE: 'size',
+        PARAM_ORDER_PROP: 'orderProp',
+        PARAM_ORDER: 'order',
+        CATEGORY: 'website',
+    },
+    QUERY_RESOURCE: {
+        api: '/queryResource',
+        PARAM_KEY_WORDS: 'keywords',
+        PARAM_PAGE: 'page',
+        PARAM_SIZE: 'size',
+        PARAM_ORDER_PROP: 'orderProp',
+        PARAM_ORDER: 'order',
+        CATEGORY: 'resource',
     }
 };
 

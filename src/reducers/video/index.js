@@ -45,24 +45,6 @@ initState[`year${currentYear - 2}_hasMore`] = true;
 
 initState.years = [currentYear, currentYear - 1, currentYear - 2];
 
-
-Array.prototype.insertOrUpdateList = function (datas, judgeKey) {
-    let newArray = this.slice();
-    datas.forEach(data => {
-        let idx = -1;
-        newArray.forEach((item, index) => {
-            if (item[judgeKey] === data[judgeKey])
-                idx = index;
-        });
-        if (idx === -1) {
-            newArray.push(data);
-        } else {
-            newArray[idx] = data;
-        }
-    });
-    return newArray;
-};
-
 const VideoReducer = (state = initState, action) => {
     let newState = state;
     switch (action.type) {

@@ -4,9 +4,11 @@ import {enquireScreen} from 'enquire-js';       //用于做手机屏幕适配
 import './config/axios-config';         //导入axios配置
 
 import {
-    BrowserRouter as Router,
+    Router,
     Route,
 } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory'
+
 import {
     Provider
 } from 'react-redux';
@@ -19,6 +21,7 @@ import {
     DetailContainer,
     VideoContainer,
     LittleToolContainer,
+    SearchResultContainer,
 } from './containers'
 import {
     VertifyGitmentComponent,
@@ -47,6 +50,10 @@ function withPropsComponent(Component, setProps) {
         return <Component {...props} {...setProps}/>
     }
 }
+
+const history = createBrowserHistory();
+
+
 class App extends Component {
 
 
@@ -62,33 +69,38 @@ class App extends Component {
             <Provider store={store}>
                 <Router
                     basename={process.env.PUBLIC_URL}
+                    history={history}
                 >
                     <AppBody style={{
                         minHeight: '100%',
                     }}>
-                        <HeaderContainer isMobile={isMobile} />
+                        <HeaderContainer isMobile={isMobile} history={history}/>
                         <MyContent>
                             <Route key={'a'} exact path={LocalRouter.HOME} render={withPropsComponent(HomeContainer, {
                                 isMobile: isMobile
                             })}/>
-                            <Route key={'b'} path={LocalRouter.UPLOAD} component={withPropsComponent(UploadContainer, {
+                            <Route key={'b'} path={LocalRouter.UPLOAD} render={withPropsComponent(UploadContainer, {
                                 isMobile: isMobile
                             })}/>
-                            <Route key={'c'} path={LocalRouter.P2P_SHARE} component={withPropsComponent(P2pShareContainer, {
+                            <Route key={'c'} path={LocalRouter.P2P_SHARE} render={withPropsComponent(P2pShareContainer, {
                                 isMobile: isMobile,
                             })}/>
-                            <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`} component={withPropsComponent(DetailContainer, {
+                            <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`} render={withPropsComponent(DetailContainer, {
                                 isMobile: isMobile,
                             })}/>
-                            <Route key={'e'} path={'/vertify_gitcomment'} component={withPropsComponent(VertifyGitmentComponent, {
+                            <Route key={'e'} path={`${LocalRouter.VERTIFY_GITMENT}`} render={withPropsComponent(VertifyGitmentComponent, {
                                 isMobile: isMobile,
                             })}/>
-                            <Route key={'f'} path={`${LocalRouter.VIDEO}`} component={withPropsComponent(VideoContainer, {
+                            <Route key={'f'} path={`${LocalRouter.VIDEO}`} render={withPropsComponent(VideoContainer, {
                                 isMobile: isMobile,
                             })}/>
-                            <Route key={'g'} path={`${LocalRouter.LITTLE_TOOL}`} component={withPropsComponent(LittleToolContainer, {
+                            <Route key={'g'} path={`${LocalRouter.LITTLE_TOOL}`} render={withPropsComponent(LittleToolContainer, {
                                 isMobile: isMobile,
                             })}/>
+                            <Route key={'h'} path={`${LocalRouter.SEARCH_RESULT}/:keywords`} render={withPropsComponent(SearchResultContainer, {
+                                isMobile: isMobile,
+                            })}/>
+
                         </MyContent>
                         <FooterContainer/>
                     </AppBody>
