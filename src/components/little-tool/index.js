@@ -1,7 +1,7 @@
 import React from 'react';
 import Anchor from 'antd/lib/anchor';
 import styled from 'styled-components';
-import LittleToolItem from './little-tool-item';
+import LittleToolItem from '../little-tool-item';
 import {
     ShareWebsiteServerConfig
 } from '../../config/server-info-config';

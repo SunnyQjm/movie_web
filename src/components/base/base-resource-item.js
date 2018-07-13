@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'
-import {
-    StaticFileConfig
-} from '../../../config/server-info-config';
-import {
-    BaseColor
-} from '../../base/base-component'
 import TweenOne from 'rc-tween-one';
+import {BaseColor} from "../base/base-component";
+
 
 const radius = '8px';
 
 const TransCardBody = styled.div`
     border-radius: ${radius};
+    display: flex;
+    flex-direction: column;
     transition: transform 0.3s;
     &:hover {
         transform: translateY(-3px);
@@ -26,14 +24,13 @@ const TransCardBody = styled.div`
 
 const CardImage = styled.div`
     display: flex;
-    position: relative;
     justify-content: center;
     align-items: center;
     border-radius: ${radius};
     background-size: cover;
 `;
 
-const CardTitle = styled.p`
+const CardTitle = styled.span`
     margin: 5px;
     text-align: center;
 `;
@@ -54,8 +51,31 @@ const CardDescription = styled.div`
     overflow: hidden;
 `;
 
-class LittleToolItem extends React.Component {
 
+function getIconByMIME(mime) {
+    if (!mime)
+        return require('../../img/file.png');
+    else if (mime.startsWith('audio/'))
+        return require('../../img/music.png');
+    else if (mime.startsWith('application/vnd.ms-excel')
+        || mime.startsWith('application/vnd.openxmlformats-officedocument.spreadsheetml.'))
+        return require('../../img/excel.png');
+    else if (mime.startsWith('application/msword') ||
+        mime.startsWith('application/vnd.openxmlformats-officedocument.wordprocessingml') ||
+        mime.startsWith('application/vnd.ms-word'))
+        return require('../../img/word.png');
+    else if (mime.startsWith('application/vnd.ms-powerpoint') ||
+        mime.startsWith('application/vnd.openxmlformats-officedocument.presentationml'))
+        return require('../../img/ppt.png');
+    else if (mime.startsWith('application/pdf'))
+        return require('../../img/pdf.png');
+    else if (mime.startsWith('image'))
+        return require('../../img/picture.png');
+    else
+        return require('../../img/file.png');
+}
+
+class BaseResourceItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -78,8 +98,8 @@ class LittleToolItem extends React.Component {
     }
 
     render() {
-        let {title, cover, description, website,} = this.props.resource;
-        let {onRemove, width, staticPath} = this.props;
+        let {title, mime, cover, introduction} = this.props.resource;
+        let {onRemove, width, isMobile} = this.props;
         let cardImageStyle = {
             width: width,
             height: width,
@@ -88,10 +108,8 @@ class LittleToolItem extends React.Component {
         let transCardBodyStyle = {
             width: width,
         };
-        let cardImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6x0qGQamxaiAtVE-O8L5LVkC5wrT8Fe9AmKiJfk8bOpCj5mxZ4Q';
         if (cover) {
-            cardImage = cover.startsWith('http') ? cover : staticPath + cover;
-            cardImageStyle.backgroundImage = `url(${cardImage})`;
+            cardImageStyle.backgroundImage = `url(${cover})`;
         } else {
             cardImageStyle.backgroundColor = 'white';
         }
@@ -100,6 +118,15 @@ class LittleToolItem extends React.Component {
             <TransCardBody {...this.props} style={transCardBodyStyle} onMouseEnter={this.handleMouseEnter}
                            onMouseLeave={this.handleMouseLeave}>
                 <CardImage style={cardImageStyle}>
+                    {
+                        !!cover ?
+                            ''
+                            :
+                            <img src={getIconByMIME(mime)} alt="" style={{
+                                width: width / 2,
+                                height: width / 2,
+                            }}/>
+                    }
                     {
                         this.state.hover ?
                             <TweenOne animation={{
@@ -110,7 +137,7 @@ class LittleToolItem extends React.Component {
                                 width: '100%',
                                 height: 0,
                             }}>
-                                <CardDescription>{description}</CardDescription>
+                                <CardDescription>{introduction}</CardDescription>
                             </TweenOne>
                             :
                             ''
@@ -123,31 +150,30 @@ class LittleToolItem extends React.Component {
     }
 }
 
-LittleToolItem.propTypes = {
+BaseResourceItem.propTypes = {
     resource: PropTypes.shape({
             title: PropTypes.string,
-            website: PropTypes.string,
-            description: PropTypes.string,
+            introduction: PropTypes.string,
             cover: PropTypes.string,
-            category: PropTypes.string,
+            mime: PropTypes.string,
         }
     ),
     width: PropTypes.number,
     onRemove: PropTypes.func,
-    staticPath: PropTypes.string,
 };
 
-LittleToolItem.defaultProps = {
+BaseResourceItem.defaultProps = {
     resource: PropTypes.shape({
             title: '',
-            website: '#',
-            description: '',
-            category: '',
+            introduction: '',
             cover: '',
+            mime: '',
         }
     ),
     width: 200,
-    staticPath: StaticFileConfig.BASE_URL
+    onRemove: () => {
+
+    },
 };
 
-export default LittleToolItem;
+export default BaseResourceItem;
