@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types'
 import {
     StaticFileConfig
-} from '../../config/server-info-config';
-import {
-    getIconByMIME
-} from '../../tool/icon-tool';
+} from '../../../config/server-info-config';
+
 
 const radius = '8px';
 
@@ -38,11 +36,11 @@ const CardTitle = styled.span`
     text-align: center;
 `;
 
-class ResourceItem extends React.Component {
+class LittleToolItem extends React.Component {
 
     render() {
-        let {movieName, size, createAt, mime, downloadPath, percent, cover, isMobile, introduction, staticPath} = this.props.resource;
-        let {onRemove, width} = this.props;
+        let {title, cover, description, website, } = this.props.resource;
+        let {onRemove, width, staticPath} = this.props;
         let cardImageStyle = {
             width: width,
             height: width,
@@ -60,29 +58,23 @@ class ResourceItem extends React.Component {
         }
         //取得文件列表中最大的文件作为主标题
         return (
-            <TransCardBody {...this.props} style={transCardBodyStyle} >
+            <TransCardBody {...this.props} style={transCardBodyStyle}>
                 <CardImage style={cardImageStyle}>
-                    {
-                        !!cover ?
-                            ''
-                            :
-                            <img src={getIconByMIME(mime)} alt="" style={{
-                                width: width / 2,
-                                height: width / 2,
-                            }}/>
-                    }
                 </CardImage>
 
-                <CardTitle>{movieName}</CardTitle>
+                <CardTitle>{title}</CardTitle>
             </TransCardBody>
         )
     }
 }
 
-ResourceItem.propTypes = {
+LittleToolItem.propTypes = {
     resource: PropTypes.shape({
-        movieName: PropTypes.string,
-            size: PropTypes.number,
+            title: PropTypes.string,
+            website: PropTypes.string,
+            description: PropTypes.string,
+            cover: PropTypes.string,
+            category: PropTypes.string,
         }
     ),
     width: PropTypes.number,
@@ -90,17 +82,17 @@ ResourceItem.propTypes = {
     staticPath: PropTypes.string,
 };
 
-ResourceItem.defaultProps = {
+LittleToolItem.defaultProps = {
     resource: PropTypes.shape({
-            movieName: '',
-            size: 0,
+            title: '',
+            website: '#',
+            description: '',
+            category: '',
+            cover: '',
         }
     ),
     width: 200,
-    onRemove: () => {
-
-    },
     staticPath: StaticFileConfig.BASE_URL
 };
 
-export default ResourceItem;
+export default LittleToolItem;

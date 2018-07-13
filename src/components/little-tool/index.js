@@ -1,9 +1,12 @@
 import React from 'react';
 import Anchor from 'antd/lib/anchor';
 import styled from 'styled-components';
+import LittleToolItem from './little-tool-item';
+import {
+    ShareWebsiteServerConfig
+} from '../../config/server-info-config';
 
 const {Link} = Anchor;
-
 
 
 const LittleToolBody = styled.div`
@@ -13,44 +16,77 @@ const LittleToolBody = styled.div`
     width: 100%;
 `;
 
-const AnchorBody = styled(Anchor)`
+const AnchorBody = styled.div`
     background-color: #fff0
     flex-grow: 0;
-`;
-const AnchorA = styled.a`
-    width: 100%;
-    height: 500px;
 `;
 
 const LittleToolContent = styled.div`
     display: flex;
     flex-direction: column;
-    flex-grow: 100;
-    margin-left: 50px;
+    flex-grow: 1;
 `;
-class LittleToolComponent extends React.Component{
-    render(){
 
+
+const CategoryItem = styled.div`
+    display: flex;
+    flex-direction: column; 
+`;
+
+const CategoryItemTitle = styled.a`
+    width: 100%;
+    font-size: 1.4em;
+    font-weight: bold;
+    text-align: center;
+    margin: 50px 0;
+`;
+
+const CategoryItemContent = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`;
+
+class LittleToolComponent extends React.Component {
+
+    componentDidMount(){
+        let {initAllWebsites, category} = this.props;
+        initAllWebsites(category);
+    }
+    render() {
+        let {category, isMobile} = this.props;
+        console.log(category);
+        let Links = category.map(category => {
+            return <Link href={`#${category}`} title={category}/>
+        });
+        console.log(ShareWebsiteServerConfig.BASE_URL);
+        let contents = category.map(category => {
+            let websites = this.props[category];
+            let websiteItems = websites.map(website => {
+               return  <LittleToolItem width={isMobile ? 80 : 200} key={website.website} resource={website} onClick={() => {
+                   window.open(website.website);
+               }} isMobile={isMobile} staticPath={ShareWebsiteServerConfig.BASE_URL + '/'}/>
+            });
+            return <CategoryItem >
+                <CategoryItemTitle id={category}>{category}</CategoryItemTitle>
+                <CategoryItemContent>
+                    {websiteItems}
+                </CategoryItemContent>
+            </CategoryItem>
+        });
         return (
             <LittleToolBody>
-                <AnchorBody offsetTop={50}>
-                    <Link href="#test1" title="便捷在线工具" />
-                    <Link href="#test2" title="资源搜索网站" />
-                    <Link href="#test3" title="Basic demo" />
-                    <Link href="#test4" title="Basic demo" />
 
-                </AnchorBody>
 
                 <LittleToolContent id={'scroll-content'}>
-                    <AnchorA id='test1'>
-                        test1</AnchorA>
-                    <AnchorA id='test2'>test2</AnchorA>
-                    <AnchorA id='test3'>test3</AnchorA>
-                    <AnchorA id='test4'>test4</AnchorA>
-                    <a id="test4">
-                        a
-                    </a>
-                </LittleToolContent>;
+                    {contents}
+                </LittleToolContent>
+                <AnchorBody >
+                    <Anchor style={{
+                        backgroundColor: '#fff0',
+                    }} offsetTop={50}>
+                        {Links}
+                    </Anchor>
+                </AnchorBody>
             </LittleToolBody>
         );
     }

@@ -14,6 +14,10 @@ const TorrentTransferAPI = {
     GET_ID: {
         api: '/getId',
         PARAM_CODE: 'code',
+    },
+    GET_WEBSITE: {
+        api: '/getWebsite',
+        PARAM_CATEGORY: 'category'
     }
 };
 
