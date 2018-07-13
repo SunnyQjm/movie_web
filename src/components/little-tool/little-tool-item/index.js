@@ -4,14 +4,15 @@ import PropTypes from 'prop-types'
 import {
     StaticFileConfig
 } from '../../../config/server-info-config';
-
+import {
+    BaseColor
+} from '../../base/base-component'
+import TweenOne from 'rc-tween-one';
 
 const radius = '8px';
 
 const TransCardBody = styled.div`
     border-radius: ${radius};
-    display: flex;
-    flex-direction: column;
     transition: transform 0.3s;
     &:hover {
         transform: translateY(-3px);
@@ -25,21 +26,59 @@ const TransCardBody = styled.div`
 
 const CardImage = styled.div`
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     border-radius: ${radius};
     background-size: cover;
 `;
 
-const CardTitle = styled.span`
+const CardTitle = styled.p`
     margin: 5px;
     text-align: center;
 `;
 
+const CardDescription = styled.div`
+    color: white;
+    width: 100%;
+    max-height: 100%;
+    position: absolute;
+    bottom: 0px;
+    padding: 5px;
+    word-break: break-all;
+    background: ${BaseColor.gray}
+    text-align: center;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+`;
+
 class LittleToolItem extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            hover: false
+        };
+        this.handleMouseEnter = this.handleMouseEnter.bind(this);
+        this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    }
+
+    handleMouseEnter() {
+        this.setState({
+            hover: true
+        });
+    }
+
+    handleMouseLeave() {
+        this.setState({
+            hover: false
+        });
+    }
+
     render() {
-        let {title, cover, description, website, } = this.props.resource;
+        let {title, cover, description, website,} = this.props.resource;
         let {onRemove, width, staticPath} = this.props;
         let cardImageStyle = {
             width: width,
@@ -58,8 +97,24 @@ class LittleToolItem extends React.Component {
         }
         //取得文件列表中最大的文件作为主标题
         return (
-            <TransCardBody {...this.props} style={transCardBodyStyle}>
+            <TransCardBody {...this.props} style={transCardBodyStyle} onMouseEnter={this.handleMouseEnter}
+                           onMouseLeave={this.handleMouseLeave}>
                 <CardImage style={cardImageStyle}>
+                    {
+                        this.state.hover ?
+                            <TweenOne animation={{
+                                height: '100%',
+                                opacity: 0.8,
+                            }} style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: 0,
+                            }}>
+                                <CardDescription>{description}</CardDescription>
+                            </TweenOne>
+                            :
+                            ''
+                    }
                 </CardImage>
 
                 <CardTitle>{title}</CardTitle>
