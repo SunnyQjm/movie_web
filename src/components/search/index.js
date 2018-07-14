@@ -37,8 +37,11 @@ class SearchComponent extends React.Component {
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
         this.handleOnKeyPress = this.handleOnKeyPress.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleInputOnBlur = this.handleInputOnBlur.bind(this);
+        this.handleInputOnFocus = this.handleInputOnFocus.bind(this);
         this.state = {
             hover: false,
+            inputFocus: false,
             searchValue: ''
         }
     }
@@ -53,6 +56,18 @@ class SearchComponent extends React.Component {
         this.setState({
             hover: false,
         });
+    }
+
+    handleInputOnFocus(){
+        this.setState({
+            inputFocus: true
+        });
+    }
+
+    handleInputOnBlur(){
+        this.setState({
+            inputFocus: false,
+        })
     }
 
     handleOnKeyPress(e) {
@@ -97,7 +112,7 @@ class SearchComponent extends React.Component {
                         onKeyPress={this.handleOnKeyPress}
             >
                 {
-                    this.state.hover ?
+                    this.state.hover || this.state.inputFocus?
                         <TweenOne animation={{
                             width: maxWidth,
                             duration: animationDuration,
@@ -106,7 +121,7 @@ class SearchComponent extends React.Component {
                         }}>
                             <Search {...this.props} style={searchStyle} type={'search'} autocomplete={true}
                                     value={searchValue}
-                                    onChange={this.handleOnChange}/>
+                                    onChange={this.handleOnChange} onFocus={this.handleInputOnFocus} onBlur={this.handleInputOnBlur}/>
                         </TweenOne>
                         :
                         <TweenOne animation={{

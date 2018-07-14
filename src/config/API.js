@@ -19,6 +19,13 @@ const TorrentTransferAPI = {
         api: '/getWebsite',
         PARAM_CATEGORY: 'category'
     },
+    PUSH_WEBSITE: {
+        api: '/pushWebsite',
+        PARAM_TITLE: 'title',
+        PARAM_WEBSITE: 'website',
+        PARAM_CATEGORY: 'category',
+        PARAM_DESCRIPTION: 'description',
+    },
     QUERY_WEBSITE: {
         api: '/queryShareWebsite',
         PARAM_KEY_WORDS: 'keywords',

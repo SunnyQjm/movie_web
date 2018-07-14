@@ -6,6 +6,9 @@ import {
     ShareWebsiteServerConfig
 } from '../../config/server-info-config';
 import BackTop from 'antd/lib/back-top';
+import Icon from 'antd/lib/icon';
+import LocalRouter from "../../LocalRouter";
+import Tooltip from 'antd/lib/tooltip';
 
 const {Link} = Anchor;
 
@@ -47,6 +50,12 @@ const CategoryItemContent = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+`;
+
+const AddIcon = styled(Icon)`
+    font-size: 1.6em;
+    margin: 10px;
+    cursor: pointer;
 `;
 
 class LittleToolComponent extends React.Component {
@@ -94,7 +103,14 @@ class LittleToolComponent extends React.Component {
                                 backgroundColor: '#fff0',
                             }} offsetTop={50}>
                                 {Links}
+                                <Tooltip title={'点此分享你的小珍藏'} placement={'left'}>
+                                    <AddIcon type={'edit'} onClick={() => {
+                                        this.props.history.push(LocalRouter.SHARE_WEBSITE)
+                                    }}/>
+                                </Tooltip>
                             </Anchor>
+
+
                         </AnchorBody>
                 }
             </LittleToolBody>
