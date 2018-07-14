@@ -8,4 +8,5 @@ export default {
     LITTLE_TOOL: '/little_tool',
     SEARCH_RESULT: '/search',
     VERTIFY_GITMENT: '/vertify_gitcomment',
+    SHARE_WEBSITE: '/shareWebsite',
 }

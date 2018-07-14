@@ -35,7 +35,7 @@ class HomeComponent extends React.Component {
         let Items = items.map((movie, index) => {
             return <ResourceItem width= {isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
-            }} isMobile={isMobile}/>
+            }} isMobile={isMobile} showIntroduction={false}/>
         });
 
         let itemsBodyStyle = {
@@ -102,7 +102,9 @@ class HomeComponent extends React.Component {
                     textAlign: 'center',
                     marginBottom: '20px',
                 }}>RESOURCE CENTER</T1>
-                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab} activeKey={activityTabKey}>
+                <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab}
+                      className={'what'}
+                      activeKey={activityTabKey}>
                     {AllItems}
                     {VideoItems}
                     {AutioItems}

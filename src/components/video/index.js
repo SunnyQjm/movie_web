@@ -34,6 +34,7 @@ class VideoComponent extends React.Component {
     createItems(items, hasMore, loading, loadMore, key, isMobile) {
         let Items = items.map((movie, index) => {
             return <ResourceItem width={isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
+                console.log('onClick');
                 this.props.history.push(`/detail/${movie.id}`)
             }} isMobile={isMobile}/>
         });
@@ -102,11 +103,6 @@ class VideoComponent extends React.Component {
         return (
             <HomeBody>
                 <BackTop/>
-                {/*<T1 style={{*/}
-                    {/*margin: '0 auto',*/}
-                    {/*textAlign: 'center',*/}
-                    {/*marginBottom: '20px',*/}
-                {/*}}>RESOURCE CENTER</T1>*/}
                 <Tabs tabPosition={isMobile ? 'top' : 'left'} type={'line'} onTabClick={changeTab}
                       activeKey={activityTabKey}>
                     {AllItems}

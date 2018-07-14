@@ -9,6 +9,7 @@ import VideoComponent from './video';
 import LittleToolComponent from './little-tool';
 import SearchComponent from './search'
 import SearchResultComponent from "./search-result";
+import ShareWebsiteComponent from "./share-website";
 
 export {
     FooterComponent,
@@ -22,4 +23,5 @@ export {
     LittleToolComponent,
     SearchComponent,
     SearchResultComponent,
+    ShareWebsiteComponent,
 }

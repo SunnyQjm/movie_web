@@ -99,7 +99,7 @@ class BaseResourceItem extends React.Component {
 
     render() {
         let {title, mime, cover, introduction} = this.props.resource;
-        let {onRemove, width, isMobile} = this.props;
+        let {onRemove, width, isMobile, showIntroduction} = this.props;
         let cardImageStyle = {
             width: width,
             height: width,
@@ -128,7 +128,7 @@ class BaseResourceItem extends React.Component {
                             }}/>
                     }
                     {
-                        this.state.hover ?
+                        this.state.hover && showIntroduction?
                             <TweenOne animation={{
                                 height: '100%',
                                 opacity: 0.8,
@@ -160,6 +160,7 @@ BaseResourceItem.propTypes = {
     ),
     width: PropTypes.number,
     onRemove: PropTypes.func,
+    showIntroduction: PropTypes.bool,
 };
 
 BaseResourceItem.defaultProps = {
@@ -171,6 +172,7 @@ BaseResourceItem.defaultProps = {
         }
     ),
     width: 200,
+    showIntroduction: true,
     onRemove: () => {
 
     },

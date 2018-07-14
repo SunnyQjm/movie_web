@@ -5,6 +5,7 @@ import LittleToolItem from '../little-tool-item';
 import {
     ShareWebsiteServerConfig
 } from '../../config/server-info-config';
+import BackTop from 'antd/lib/back-top';
 
 const {Link} = Anchor;
 
@@ -44,6 +45,8 @@ const CategoryItemTitle = styled.a`
 const CategoryItemContent = styled.div`
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 `;
 
 class LittleToolComponent extends React.Component {
@@ -78,6 +81,7 @@ class LittleToolComponent extends React.Component {
         });
         return (
             <LittleToolBody>
+                <BackTop/>
                 <LittleToolContent id={'scroll-content'}>
                     {contents}
                 </LittleToolContent>

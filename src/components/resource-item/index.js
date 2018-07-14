@@ -10,18 +10,17 @@ import PropTypes from 'prop-types'
 
 class ResourceItem extends React.Component {
     render() {
-        let {movieName, mime, cover, isMobile, introduction} = this.props.resource;
-        let {onRemove, width} = this.props;
+        let {movieName, mime, cover, introduction} = this.props.resource;
         if(cover)
             cover = cover.startsWith('http') ? cover : StaticFileConfig.BASE_URL + cover;
         //取得文件列表中最大的文件作为主标题
         return (
-            <BaseResourceItem resource={{
+            <BaseResourceItem {...this.props} resource={{
                 title: movieName,
                 introduction: introduction,
                 mime: mime,
                 cover: cover,
-            }} width={width} onRemove={onRemove} isMobile={isMobile}/>
+            }}/>
         )
     }
 }

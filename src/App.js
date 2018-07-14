@@ -22,6 +22,7 @@ import {
     VideoContainer,
     LittleToolContainer,
     SearchResultContainer,
+    ShareWebsiteContainer,
 } from './containers'
 import {
     VertifyGitmentComponent,
@@ -51,7 +52,9 @@ function withPropsComponent(Component, setProps) {
     }
 }
 
-const history = createBrowserHistory();
+const history = createBrowserHistory({
+    basename: process.env.PUBLIC_URL
+});
 
 
 class App extends Component {
@@ -82,25 +85,34 @@ class App extends Component {
                             <Route key={'b'} path={LocalRouter.UPLOAD} render={withPropsComponent(UploadContainer, {
                                 isMobile: isMobile
                             })}/>
-                            <Route key={'c'} path={LocalRouter.P2P_SHARE} render={withPropsComponent(P2pShareContainer, {
-                                isMobile: isMobile,
-                            })}/>
-                            <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`} render={withPropsComponent(DetailContainer, {
-                                isMobile: isMobile,
-                            })}/>
-                            <Route key={'e'} path={`${LocalRouter.VERTIFY_GITMENT}`} render={withPropsComponent(VertifyGitmentComponent, {
-                                isMobile: isMobile,
-                            })}/>
+                            <Route key={'c'} path={LocalRouter.P2P_SHARE}
+                                   render={withPropsComponent(P2pShareContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
+                            <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`}
+                                   render={withPropsComponent(DetailContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
+                            <Route key={'e'} path={`${LocalRouter.VERTIFY_GITMENT}`}
+                                   render={withPropsComponent(VertifyGitmentComponent, {
+                                       isMobile: isMobile,
+                                   })}/>
                             <Route key={'f'} path={`${LocalRouter.VIDEO}`} render={withPropsComponent(VideoContainer, {
                                 isMobile: isMobile,
                             })}/>
-                            <Route key={'g'} path={`${LocalRouter.LITTLE_TOOL}`} render={withPropsComponent(LittleToolContainer, {
-                                isMobile: isMobile,
-                            })}/>
-                            <Route key={'h'} path={`${LocalRouter.SEARCH_RESULT}/:keywords`} render={withPropsComponent(SearchResultContainer, {
-                                isMobile: isMobile,
-                            })}/>
+                            <Route key={'g'} path={`${LocalRouter.LITTLE_TOOL}`}
+                                   render={withPropsComponent(LittleToolContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
+                            <Route key={'h'} path={`${LocalRouter.SEARCH_RESULT}/:keywords`}
+                                   render={withPropsComponent(SearchResultContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
 
+                            <Route key={'i'} path={`${LocalRouter.SHARE_WEBSITE}`}
+                                   render={withPropsComponent(ShareWebsiteContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
                         </MyContent>
                         <FooterContainer/>
                     </AppBody>

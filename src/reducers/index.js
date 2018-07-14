@@ -7,6 +7,7 @@ import DetailReducer from './detail';
 import VideoReducer from './video';
 import LittleToolReducer from './little-tool';
 import SearchResultReducer from "./search-result";
+import ShareWebsiteReducer from './share-website';
 import {
     combineReducers
 } from 'redux'
@@ -38,4 +39,5 @@ export default combineReducers({
     VideoReducer,
     LittleToolReducer,
     SearchResultReducer,
+    ShareWebsiteReducer,
 })

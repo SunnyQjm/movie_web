@@ -42,7 +42,7 @@ const StaticFileConfig = {
     protocol: 'https',
     host: 'jx.qjm253.cn',
     port: 9749,
-    sub_domain: '/static',
+    sub_domain: '/statics',
 };
 StaticFileConfig.BASE_URL = `${StaticFileConfig.protocol}://${StaticFileConfig.host}${StaticFileConfig.sub_domain}`;
 

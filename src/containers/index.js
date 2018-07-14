@@ -7,6 +7,7 @@ import DetailContainer from './detail';
 import VideoContainer from './video';
 import LittleToolContainer from './little-tool';
 import SearchResultContainer from './search-result';
+import ShareWebsiteContainer from './share-website';
 
 export {
     HeaderContainer,
@@ -18,4 +19,5 @@ export {
     VideoContainer,
     LittleToolContainer,
     SearchResultContainer,
+    ShareWebsiteContainer,
 }
