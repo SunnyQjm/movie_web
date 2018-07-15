@@ -12,7 +12,7 @@ import {
 import Spin from 'antd/lib/spin';
 import ResourceItem from '../resource-item';
 import {
-    MovieAPI
+    CloudServerAPI
 } from '../../config/API';
 
 const TabPane = Tabs.TabPane;
@@ -50,7 +50,7 @@ class HomeComponent extends React.Component {
             <ItemsBody
                 pageStart={0}
                 loadMore={page => {
-                    loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO)
+                    loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_VIDEO)
                 }}
                 hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
                 style={itemsBodyStyle}
@@ -78,19 +78,19 @@ class HomeComponent extends React.Component {
         }, '所有资源', isMobile);
 
         let VideoItems = this.createItems(videoItems, videoHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_VIDEO);
         }, '视频', isMobile);
 
         let AutioItems = this.createItems(audioItems, audioHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_AUDIO);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_AUDIO);
         }, '音频', isMobile);
 
         let ImageItems = this.createItems(imageItems, imageHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_IMAGE);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_IMAGE);
         }, '图片', isMobile);
 
         let ApplicationItems = this.createItems(applicationItems, applicationHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_APPLICATION);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_APPLICATION);
         }, '文档', isMobile);
 
 

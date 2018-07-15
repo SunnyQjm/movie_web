@@ -11,8 +11,8 @@ import {
 } from '../../ActionType';
 
 import {
-    MovieAPI,
-    getMovieAxios,
+    CloudServerAPI,
+    getCloudServerAxios,
 } from '../../config/API';
 
 import message from 'antd/lib/message';
@@ -32,8 +32,8 @@ export default connect(
                 })
             },
             getResourceById: (id) => {
-                getMovieAxios(axios => {
-                   axios.get(`${MovieAPI.GET_MOVIE_BY_ID.api}?${MovieAPI.GET_MOVIE_BY_ID.PARAM_ID}=${id}`)
+                getCloudServerAxios(axios => {
+                   axios.get(`${CloudServerAPI.GET_MOVIE_BY_ID.api}?${CloudServerAPI.GET_MOVIE_BY_ID.PARAM_ID}=${id}`)
                        .then(res => {
                             if(res.data.code === 0){
                                 dispatch({

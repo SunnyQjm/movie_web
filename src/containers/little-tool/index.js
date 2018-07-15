@@ -5,8 +5,8 @@ import {
     ACTION_LITTLE_TOOL_ADD_ITEMS
 } from '../../ActionType';
 import {
-    getTorrentTransferAxois,
-    TorrentTransferAPI,
+    getCloudServerAxios,
+    CloudServerAPI,
 } from '../../config/API';
 
 import {
@@ -23,8 +23,8 @@ export default connect(
         return {
             initAllWebsites: (category) => {
                 category.forEach(category => {
-                    getTorrentTransferAxois(axios => {
-                       axios.get(`${TorrentTransferAPI.GET_WEBSITE.api}?${TorrentTransferAPI.GET_WEBSITE.PARAM_CATEGORY}=${category}`)
+                    getCloudServerAxios(axios => {
+                       axios.get(`${CloudServerAPI.GET_WEBSITE.api}?${CloudServerAPI.GET_WEBSITE.PARAM_CATEGORY}=${category}`)
                            .then(res => {
                                if(res.data.code === 0)
                                    dispatch({

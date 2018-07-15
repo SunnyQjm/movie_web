@@ -17,8 +17,8 @@ import ToolTip from 'antd/lib/tooltip';
 import BackTop from 'antd/lib/back-top';
 import QueueAnim from 'rc-queue-anim';
 import {
-    getTorrentTransferAxois,
-    TorrentTransferAPI,
+    getCloudServerAxios,
+    CloudServerAPI,
 } from '../../config/API';
 import axios from 'axios';
 
@@ -150,8 +150,8 @@ class P2pShareComponent extends React.Component {
     downloadByTorrentId(value) {
         let {addTorrent} = this.props;
         if (value.length === 4) {     //用提取码下载
-            getTorrentTransferAxois(axios => {
-                axios.get(`${TorrentTransferAPI.GET_ID.api}?${TorrentTransferAPI.GET_ID.PARAM_CODE}=${value}`)
+            getCloudServerAxios(axios => {
+                axios.get(`${CloudServerAPI.GET_ID.api}?${CloudServerAPI.GET_ID.PARAM_CODE}=${value}`)
                     .then(res => {
                         if (res.data.code === 0 && !!res.data.data) {
                             getClient(client => {

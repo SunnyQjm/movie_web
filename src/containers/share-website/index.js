@@ -14,8 +14,8 @@ import {
 import message from 'antd/lib/message';
 
 import {
-    TorrentTransferAPI,
-    getTorrentTransferAxois,
+    CloudServerAPI,
+    getCloudServerAxios,
 } from '../../config/API';
 
 export default connect(
@@ -37,13 +37,13 @@ export default connect(
                 dispatch({
                     type: ACTION_SHARE_WEBSITE_BEGIN_SHARE,
                 });
-                const PW = TorrentTransferAPI.PUSH_WEBSITE;
+                const PW = CloudServerAPI.PUSH_WEBSITE;
                 let requestParams = {};
                 requestParams[PW.PARAM_TITLE] = title.value;
                 requestParams[PW.PARAM_WEBSITE] = website.value;
                 requestParams[PW.PARAM_CATEGORY] = category.value;
                 requestParams[PW.PARAM_DESCRIPTION] = description.value;
-                getTorrentTransferAxois(axios => {
+                getCloudServerAxios(axios => {
                    axios.post(PW.api, requestParams)
                        .then(res => {
                            if(res.data.code === 0){

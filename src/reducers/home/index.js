@@ -7,7 +7,7 @@ import {
 } from '../../ActionType';
 
 import {
-    MovieAPI
+    CloudServerAPI
 } from '../../config/API'
 
 const initState = {
@@ -33,25 +33,25 @@ const HomeReducer = (state = initState, action) => {
         case ACTION_HOME_ADD_ITEMS:
             if (!action.toType)
                 newState.allItems = newState.allItems.insertOrUpdateList(action.data, 'id');
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_VIDEO)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_VIDEO)
                 newState.videoItems = newState.videoItems.insertOrUpdateList(action.data, 'id');
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_APPLICATION)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_APPLICATION)
                 newState.applicationItems = newState.applicationItems.insertOrUpdateList(action.data, 'id');
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_AUDIO)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_AUDIO)
                 newState.audioItems = newState.audioItems.insertOrUpdateList(action.data, 'id');
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_IMAGE)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_IMAGE)
                 newState.imageItems = newState.imageItems.insertOrUpdateList(action.data, 'id');
             break;
         case ACTION_HOME_NO_MORE:
             if (!action.toType)
                 newState.allHasMore = false;
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_VIDEO)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_VIDEO)
                 newState.videoHasMore = false;
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_APPLICATION)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_APPLICATION)
                 newState.applicationHasMore = false;
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_AUDIO)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_AUDIO)
                 newState.audioHasMore = false;
-            else if (action.toType === MovieAPI.GET_MOVIES.TYPE_IMAGE)
+            else if (action.toType === CloudServerAPI.GET_MOVIES.TYPE_IMAGE)
                 newState.imageHasMore = false;
             break;
         case ACTION_HOME_BEGIN_LOADING:

@@ -12,8 +12,8 @@ import {
     P2pShareComponent
 } from '../../components'
 import {
-    getTorrentTransferAxois,
-    TorrentTransferAPI,
+    getCloudServerAxios,
+    CloudServerAPI,
 } from '../../config/API';
 
 export default connect(
@@ -25,9 +25,9 @@ export default connect(
     (dispatch) => {
         return {
             addTorrent: torrent => {
-                getTorrentTransferAxois(axios => {
+                getCloudServerAxios(axios => {
                     let params = {};
-                    params[TorrentTransferAPI.PUSH_ID.PARAM_TORRENT_ID] = torrent.magnetURI;
+                    params[CloudServerAPI.PUSH_ID.PARAM_TORRENT_ID] = torrent.magnetURI;
                     axios.post('/pushId', params)
                         .then(res => {
                             if(res.data.code === 0)

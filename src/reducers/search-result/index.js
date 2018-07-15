@@ -1,5 +1,5 @@
 import {
-    TorrentTransferAPI
+    CloudServerAPI
 } from '../../config/API';
 import {
     ACTION_SEARCH_RESULT_ADD_ITEMS,
@@ -25,17 +25,17 @@ const SearchResultReducer = (state = initState, action) => {
     let newState = state;
     switch (action.type) {
         case ACTION_SEARCH_RESULT_ADD_ITEMS:
-            if (action.category === TorrentTransferAPI.QUERY_RESOURCE.CATEGORY)
+            if (action.category === CloudServerAPI.QUERY_RESOURCE.CATEGORY)
             // newState.resourceItems = newState.resourceItems.insertOrUpdateList(action.data, 'id');
                 newState.resourceItems = action.data;
-            else if (action.category === TorrentTransferAPI.QUERY_WEBSITE.CATEGORY)
+            else if (action.category === CloudServerAPI.QUERY_WEBSITE.CATEGORY)
             // newState.websiteItems = newState.websiteItems.insertOrUpdateList(action.data, 'website');
                 newState.websiteItems = action.data;
             break;
         case ACTION_SEARCH_RESULT_NO_MORE:
-            if (action.category === TorrentTransferAPI.QUERY_RESOURCE.CATEGORY)
+            if (action.category === CloudServerAPI.QUERY_RESOURCE.CATEGORY)
                 newState.resourceHasMore = false;
-            else if (action.category === TorrentTransferAPI.QUERY_WEBSITE.CATEGORY)
+            else if (action.category === CloudServerAPI.QUERY_WEBSITE.CATEGORY)
                 newState.websiteHasMore = false;
             break;
         case ACTION_SEARCH_RESULT_BEGIN_LOADING:

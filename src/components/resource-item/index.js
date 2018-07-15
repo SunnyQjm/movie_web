@@ -3,7 +3,7 @@ import {
     BaseResourceItem
 } from '../base';
 import {
-    StaticFileConfig
+    IntranetServerConfig
 } from '../../config/server-info-config';
 import PropTypes from 'prop-types'
 
@@ -12,7 +12,7 @@ class ResourceItem extends React.Component {
     render() {
         let {movieName, mime, cover, introduction} = this.props.resource;
         if(cover)
-            cover = cover.startsWith('http') ? cover : StaticFileConfig.BASE_URL + cover;
+            cover = cover.startsWith('http') ? cover : IntranetServerConfig.STATIC_URL + cover;
         //取得文件列表中最大的文件作为主标题
         return (
             <BaseResourceItem {...this.props} resource={{

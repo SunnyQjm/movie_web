@@ -3,7 +3,7 @@ import Anchor from 'antd/lib/anchor';
 import styled from 'styled-components';
 import LittleToolItem from '../little-tool-item';
 import {
-    ShareWebsiteServerConfig
+    CloudServerConfig
 } from '../../config/server-info-config';
 import BackTop from 'antd/lib/back-top';
 import Icon from 'antd/lib/icon';
@@ -76,7 +76,7 @@ class LittleToolComponent extends React.Component {
                 return <LittleToolItem width={isMobile ? 80 : 200} key={website.website} resource={website}
                                        onClick={() => {
                                            window.open(website.website);
-                                       }} isMobile={isMobile} staticPath={ShareWebsiteServerConfig.BASE_URL + '/'}/>
+                                       }} isMobile={isMobile} staticPath={CloudServerConfig.STATIC_URL}/>
             });
             return websiteItems.length > 0 ?
                 <CategoryItem key={category}>

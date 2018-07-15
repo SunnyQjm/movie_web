@@ -2,7 +2,6 @@
   "name": "movie_web",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://sunnyqjm.github.io/movie_web",
   "devDependencies": {
     "gh-pages": "^1.2.0",
     "react-app-rewired": "^1.5.2"

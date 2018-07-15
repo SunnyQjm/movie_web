@@ -6,7 +6,7 @@ import {
     ACTION_VIDEO_ADD_ITEMS,
 } from '../../ActionType';
 import {
-    MovieAPI
+    CloudServerAPI
 } from '../../config/API';
 
 const initState = {
@@ -51,33 +51,33 @@ const VideoReducer = (state = initState, action) => {
         case ACTION_VIDEO_ADD_ITEMS:
             if (!action.category)
                 newState.allItems = newState.allItems.insertOrUpdateList(action.data, 'id');
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ACT)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_ACT)
                 newState.actItems = newState.actItems.insertOrUpdateList(action.data, 'id');
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_LOVE)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_LOVE)
                 newState.loveItems = newState.loveItems.insertOrUpdateList(action.data, 'id');
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_THRILLER)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_THRILLER)
                 newState.thrillerItems = newState.thrillerItems.insertOrUpdateList(action.data, 'id');
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_ADVENTURE)
                 newState.adventureItems = newState.adventureItems.insertOrUpdateList(action.data, 'id');
-            else if(action.category === MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
+            else if(action.category === CloudServerAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
                 newState.scienceFictionItems = newState.scienceFictionItems.insertOrUpdateList(action.data, 'id');
-            else if(action.category === MovieAPI.GET_MOVIES.CATEGORY_YEAR)
+            else if(action.category === CloudServerAPI.GET_MOVIES.CATEGORY_YEAR)
                 newState[`year${action.year}_items`] = newState[`year${action.year}_items`].insertOrUpdateList(action.data, 'id');
             break;
         case ACTION_VIDEO_NO_MORE:
             if (!action.category)
                 newState.allHasMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ACT)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_ACT)
                 newState.actHashMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_LOVE)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_LOVE)
                 newState.loveHasMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_THRILLER)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_THRILLER)
                 newState.thrillerHasMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_ADVENTURE)
                 newState.adventureHasMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION)
                 newState.scienceFictionHasMore = false;
-            else if (action.category === MovieAPI.GET_MOVIES.CATEGORY_YEAR)
+            else if (action.category === CloudServerAPI.GET_MOVIES.CATEGORY_YEAR)
                 newState[`year${action.year}_hasMore`] = false;
             break;
         case ACTION_VIDEO_BEGIN_LOADING:

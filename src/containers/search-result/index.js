@@ -13,7 +13,7 @@ import {
     ACTION_SEARCH_RESULT_NO_MORE,
     ACTION_SEARCH_RESULT_UPDATE_KEYWORDS,
 } from "../../ActionType";
-import {getTorrentTransferAxois, TorrentTransferAPI} from "../../config/API";
+import {getCloudServerAxios, CloudServerAPI} from "../../config/API";
 import message from "antd/lib/message/index";
 
 export default connect(
@@ -30,19 +30,19 @@ export default connect(
                     category: category,
                     keywords: keywords,
                 });
-                let URL = TorrentTransferAPI.BASE_URL;
-                if(category === TorrentTransferAPI.QUERY_WEBSITE.CATEGORY){
-                    URL += `${TorrentTransferAPI.QUERY_WEBSITE.api}?${TorrentTransferAPI.QUERY_WEBSITE.PARAM_KEY_WORDS}=${keywords}`;
-                    // URL += `&${TorrentTransferAPI.QUERY_WEBSITE.PARAM_SIZE}=10`;
-                    // URL += `&${TorrentTransferAPI.QUERY_WEBSITE.PARAM_PAGE}=${page}`
-                } else if(category === TorrentTransferAPI.QUERY_RESOURCE.CATEGORY){
-                    URL += `${TorrentTransferAPI.QUERY_RESOURCE.api}?${TorrentTransferAPI.QUERY_RESOURCE.PARAM_KEY_WORDS}=${keywords}`;
-                    // URL += `&${TorrentTransferAPI.QUERY_RESOURCE.PARAM_SIZE}=10`;
-                    // URL += `&${TorrentTransferAPI.QUERY_RESOURCE.PARAM_PAGE}=${page}`
+                let URL = CloudServerAPI.BASE_URL;
+                if(category === CloudServerAPI.QUERY_WEBSITE.CATEGORY){
+                    URL += `${CloudServerAPI.QUERY_WEBSITE.api}?${CloudServerAPI.QUERY_WEBSITE.PARAM_KEY_WORDS}=${keywords}`;
+                    // URL += `&${CloudServerAPI.QUERY_WEBSITE.PARAM_SIZE}=10`;
+                    // URL += `&${CloudServerAPI.QUERY_WEBSITE.PARAM_PAGE}=${page}`
+                } else if(category === CloudServerAPI.QUERY_RESOURCE.CATEGORY){
+                    URL += `${CloudServerAPI.QUERY_RESOURCE.api}?${CloudServerAPI.QUERY_RESOURCE.PARAM_KEY_WORDS}=${keywords}`;
+                    // URL += `&${CloudServerAPI.QUERY_RESOURCE.PARAM_SIZE}=10`;
+                    // URL += `&${CloudServerAPI.QUERY_RESOURCE.PARAM_PAGE}=${page}`
                 } else {
                     return;
                 }
-                getTorrentTransferAxois(axois => {
+                getCloudServerAxios(axois => {
                     axois.get(URL)
                         .then(res => {
                             dispatch({

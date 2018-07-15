@@ -1,9 +1,10 @@
 // https://jx.qjm253.cn/api
-const ServerConfig = {
+const IntranetServerConfig = {
     protocol: 'https',
     host: 'jx.qjm253.cn',
     port: 4897,
     sub_domain: '/api',
+    static_domain: '/statics',
 };
 
 const TestServerConfig = {
@@ -11,44 +12,29 @@ const TestServerConfig = {
     host: 'localhost',
     port: 4897,
     sub_domain: '',
+    static_domain: '/statics',
 };
 
-// ServerConfig.BASE_URL = `${ServerConfig.protocol}://${ServerConfig.host}${ServerConfig.sub_domain}`;
+IntranetServerConfig.BASE_URL = `${IntranetServerConfig.protocol}://${IntranetServerConfig.host}${IntranetServerConfig.sub_domain}`;
+IntranetServerConfig.STATIC_URL = `${IntranetServerConfig.protocol}://${IntranetServerConfig.host}${IntranetServerConfig.static_domain}`;
+
 //test
-ServerConfig.BASE_URL = `${TestServerConfig.protocol}://${TestServerConfig.host}:${TestServerConfig.port}${TestServerConfig.sub_domain}`;
+// IntranetServerConfig.BASE_URL = `${TestServerConfig.protocol}://${TestServerConfig.host}:${TestServerConfig.port}${TestServerConfig.sub_domain}`;
+// IntranetServerConfig.STATIC_URL = `${TestServerConfig.protocol}://${TestServerConfig.host}${TestServerConfig.static_domain}/`;
 
 
-const TorrentTransferServerConfig = {
+const CloudServerConfig = {
     protocol: 'https',
     host: 'movie.qjm253.cn',
     port: 80,
     sub_domain: '/movie',
+    static_domain: '/statics'
 };
 
-TorrentTransferServerConfig.BASE_URL = `${TorrentTransferServerConfig.protocol}://${TorrentTransferServerConfig.host}${TorrentTransferServerConfig.sub_domain}`;
-
-const ShareWebsiteServerConfig = {
-    protocol: 'https',
-    host: 'movie.qjm253.cn',
-    port: 80,
-    sub_domain: '/statics',
-};
-
-ShareWebsiteServerConfig.BASE_URL = `${ShareWebsiteServerConfig.protocol}://${ShareWebsiteServerConfig.host}${ShareWebsiteServerConfig.sub_domain}`;
-
-
-
-const StaticFileConfig = {
-    protocol: 'https',
-    host: 'jx.qjm253.cn',
-    port: 9749,
-    sub_domain: '/statics',
-};
-StaticFileConfig.BASE_URL = `${StaticFileConfig.protocol}://${StaticFileConfig.host}${StaticFileConfig.sub_domain}`;
+CloudServerConfig.BASE_URL = `${CloudServerConfig.protocol}://${CloudServerConfig.host}${CloudServerConfig.sub_domain}`;
+CloudServerConfig.STATIC_URL = `${CloudServerConfig.protocol}://${CloudServerConfig.host}${CloudServerConfig.static_domain}/`;
 
 export {
-    ServerConfig,
-    TorrentTransferServerConfig,
-    StaticFileConfig,
-    ShareWebsiteServerConfig,
+    IntranetServerConfig,
+    CloudServerConfig,
 }

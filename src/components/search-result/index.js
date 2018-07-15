@@ -13,7 +13,7 @@ import Spin from 'antd/lib/spin';
 import ResourceItem from '../resource-item';
 import LittleToolItem from '../little-tool-item';
 import {
-    TorrentTransferAPI
+    CloudServerAPI
 } from '../../config/API';
 
 const TabPane = Tabs.TabPane;
@@ -54,8 +54,8 @@ class SearchResultComponent extends React.Component {
     loadData(){
         let {loadMore, match} = this.props;
         let {keywords} = match.params;
-        loadMore(0, TorrentTransferAPI.QUERY_RESOURCE.CATEGORY, keywords);
-        loadMore(0, TorrentTransferAPI.QUERY_WEBSITE.CATEGORY, keywords);
+        loadMore(0, CloudServerAPI.QUERY_RESOURCE.CATEGORY, keywords);
+        loadMore(0, CloudServerAPI.QUERY_WEBSITE.CATEGORY, keywords);
     }
 
 
@@ -81,11 +81,11 @@ class SearchResultComponent extends React.Component {
                                    isMobile={isMobile}/>
         });
         let ResourceItems = this.createItems(ris, resourceHasMore, loading, page => {
-            loadMore(page, TorrentTransferAPI.QUERY_RESOURCE.CATEGORY, keywords)
+            loadMore(page, CloudServerAPI.QUERY_RESOURCE.CATEGORY, keywords)
         }, '资源');
 
         let WebsiteItems = this.createItems(wis, websiteHasMore, loading, page => {
-            loadMore(page, TorrentTransferAPI.QUERY_WEBSITE.CATEGORY, keywords);
+            loadMore(page, CloudServerAPI.QUERY_WEBSITE.CATEGORY, keywords);
         }, '网站');
 
         return (

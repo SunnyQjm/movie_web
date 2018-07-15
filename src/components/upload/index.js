@@ -10,8 +10,8 @@ import {
     BaseHoverFloatDiv,
 } from '../base/base-component';
 import {
-    MovieAPI,
-    getMovieAxios
+    CloudServerAPI,
+    getCloudServerAxios, IntranetServerAPI
 } from '../../config/API';
 import {
     getMD5
@@ -48,7 +48,7 @@ const UploadBody = styled(BaseHoverFloatDiv)`
 const props = {
     name: 'file',
     multiple: true,
-    action: MovieAPI.UPLOAD_FILE.url,
+    action: IntranetServerAPI.UPLOAD_FILE.url,
     showUploadList: false,
 };
 
@@ -77,8 +77,8 @@ class UploadComponent extends React.Component {
         return new Promise((resolve, reject) => {
             getMD5(file)
                 .then(md5 => {
-                    getMovieAxios(axios => {
-                        axios.get(`${MovieAPI.JUDGE_MD5.api}?${MovieAPI.JUDGE_MD5.PARAM_MD5}=${md5}`)
+                    getCloudServerAxios(axios => {
+                        axios.get(`${CloudServerAPI.JUDGE_MD5.api}?${CloudServerAPI.JUDGE_MD5.PARAM_MD5}=${md5}`)
                             .then(res => {
                                 if (res.data.data.exist) {
                                     let {addFile} = this.props;

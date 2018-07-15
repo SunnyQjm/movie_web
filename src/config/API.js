@@ -1,12 +1,12 @@
 import {
-    TorrentTransferServerConfig,
-    ServerConfig
+    CloudServerConfig,
+    IntranetServerConfig
 } from './server-info-config';
 import thunky from 'thunky';
 import axios from 'axios';
 
-const TorrentTransferAPI = {
-    BASE_URL: TorrentTransferServerConfig.BASE_URL,
+const CloudServerAPI = {
+    BASE_URL: CloudServerConfig.BASE_URL,
     PUSH_ID: {
         api: '/pushId',
         PARAM_TORRENT_ID: 'torrentId',
@@ -43,18 +43,7 @@ const TorrentTransferAPI = {
         PARAM_ORDER_PROP: 'orderProp',
         PARAM_ORDER: 'order',
         CATEGORY: 'resource',
-    }
-};
-
-const getTorrentTransferAxois = thunky(cb => {
-    const instance = axios.create({
-        baseURL: TorrentTransferAPI.BASE_URL,
-    });
-    cb(instance);
-});
-
-const MovieAPI = {
-    BASE_URL: ServerConfig.BASE_URL,
+    },
     /**
      * GET 获取电影信息的接口
      */
@@ -90,6 +79,13 @@ const MovieAPI = {
         CATEGORY_YEAR: 'CATEGORY_YEAR',     //这个类别表示的是一个时间ACTION
 
     },
+    /**
+     * GET 通过id查询文件的信息
+     */
+    GET_MOVIE_BY_ID: {
+        api: '/getMovieById',
+        PARAM_ID: 'id',
+    },
 
     /**
      * GET 根据电影名字检索电影
@@ -97,14 +93,6 @@ const MovieAPI = {
     QUERY_MOVIE_BY_NAME: {
         api: '/queryMovieByName',
         PARAM_NAME: 'name',                     //欲搜索电影包含的关键字
-    },
-
-    /**
-     * GET 通过id查询文件的信息
-     */
-    GET_MOVIE_BY_ID: {
-        api: '/getMovieById',
-        PARAM_ID: 'id',
     },
 
     /**
@@ -122,24 +110,37 @@ const MovieAPI = {
         api: '/judgeMD5',
         PARAM_MD5: 'md5',       //客户端计算所得的欲上传文件的MD5
     },
+};
+
+const getCloudServerAxios = thunky(cb => {
+    const instance = axios.create({
+        baseURL: CloudServerAPI.BASE_URL,
+    });
+    cb(instance);
+});
+
+const IntranetServerAPI = {
+    BASE_URL: IntranetServerConfig.BASE_URL,
+
+
     UPLOAD_FILE: {
         api: '/upload',
         PARAM_KEY: 'file',
     }
 };
 
-MovieAPI.UPLOAD_FILE.url = `${MovieAPI.BASE_URL}/upload`;
+IntranetServerAPI.UPLOAD_FILE.url = `${IntranetServerAPI.BASE_URL}/upload`;
 
-const getMovieAxios = thunky(cb => {
+const getIntranetAxios = thunky(cb => {
     const instance = axios.create({
-        baseURL: MovieAPI.BASE_URL,
+        baseURL: IntranetServerAPI.BASE_URL,
     });
     cb(instance);
 });
 
 export {
-    TorrentTransferAPI,
-    MovieAPI,
-    getMovieAxios,
-    getTorrentTransferAxois,
+    CloudServerAPI,
+    IntranetServerAPI,
+    getIntranetAxios,
+    getCloudServerAxios,
 }

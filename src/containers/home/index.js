@@ -15,8 +15,8 @@ import {
 } from '../../ActionType';
 import message from 'antd/lib/message';
 import {
-    MovieAPI,
-    getMovieAxios,
+    CloudServerAPI,
+    getCloudServerAxios,
 } from '../../config/API';
 
 export default connect(
@@ -32,7 +32,7 @@ export default connect(
                     type: ACTION_HOME_BEGIN_LOADING,
                     toType: type
                 });
-                const GET_MOVIES = MovieAPI.GET_MOVIES;
+                const GET_MOVIES = CloudServerAPI.GET_MOVIES;
                 let URL = `${GET_MOVIES.api}?${GET_MOVIES.PARAM_PAGE}=${page}&${GET_MOVIES.PARAM_SIZE}=10`;
                 if(isDownload)
                     URL += `&${GET_MOVIES.PARAM_IS_DOWNLOAD}=1`;
@@ -40,7 +40,7 @@ export default connect(
                     URL = URL + `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
                 if(type)
                     URL = URL + `&${GET_MOVIES.PARAM_TYPE}=${type}`;
-                getMovieAxios(axois => {
+                getCloudServerAxios(axois => {
                     axois.get(URL)
                         .then(res => {
                             dispatch({

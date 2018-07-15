@@ -13,8 +13,8 @@ import {
     ACTION_VIDEO_ADD_ITEMS,
 } from '../../ActionType';
 import {
-    MovieAPI,
-    getMovieAxios,
+    CloudServerAPI,
+    getCloudServerAxios,
 } from '../../config/API';
 import message from "antd/lib/message/index";
 
@@ -31,18 +31,18 @@ export default connect(
                     type: ACTION_VIDEO_BEGIN_LOADING,
                     category: category
                 });
-                const GET_MOVIES = MovieAPI.GET_MOVIES;
+                const GET_MOVIES = CloudServerAPI.GET_MOVIES;
                 let URL = `${GET_MOVIES.api}?${GET_MOVIES.PARAM_PAGE}=${page}&${GET_MOVIES.PARAM_SIZE}=10`;
                 // if(isDownload)
                 //     URL += `&${GET_MOVIES.PARAM_IS_DOWNLOAD}=1`;
                 if(sortByTime)
                     URL += `&${GET_MOVIES.PARAM_ORDER_PROP}=createdAt&${GET_MOVIES.PARAM_ORDER}=DESC`;
-                URL += `&${GET_MOVIES.PARAM_TYPE}=${MovieAPI.GET_MOVIES.TYPE_VIDEO}`;
-                if(category && category !== MovieAPI.GET_MOVIES.CATEGORY_YEAR)
+                URL += `&${GET_MOVIES.PARAM_TYPE}=${CloudServerAPI.GET_MOVIES.TYPE_VIDEO}`;
+                if(category && category !== CloudServerAPI.GET_MOVIES.CATEGORY_YEAR)
                     URL += `&filterProps=category&filterValues=${category}`;
-                else if (category === MovieAPI.GET_MOVIES.CATEGORY_YEAR)
+                else if (category === CloudServerAPI.GET_MOVIES.CATEGORY_YEAR)
                     URL += `&filterProps=releaseTime&filterValues=${year}`;
-                getMovieAxios(axois => {
+                getCloudServerAxios(axois => {
                     axois.get(URL)
                         .then(res => {
                             dispatch({

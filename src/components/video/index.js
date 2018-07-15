@@ -6,13 +6,10 @@ import styled from 'styled-components';
 import {
     withRouter
 } from 'react-router-dom';
-import {
-    T1
-} from '../base/base-component';
 import Spin from 'antd/lib/spin';
 import ResourceItem from '../resource-item';
 import {
-    MovieAPI
+    CloudServerAPI
 } from '../../config/API';
 
 const TabPane = Tabs.TabPane;
@@ -44,7 +41,7 @@ class VideoComponent extends React.Component {
             <ItemsBody
                 pageStart={0}
                 loadMore={page => {
-                    loadMore(page, true, true, MovieAPI.GET_MOVIES.TYPE_VIDEO)
+                    loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_VIDEO)
                 }}
                 hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
                 style={itemsBodyStyle}
@@ -76,28 +73,28 @@ class VideoComponent extends React.Component {
         }, '所有视频', isMobile);
 
         let ActItems = this.createItems(actItems, actHashMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_ACT);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_ACT);
         }, '动作', isMobile);
 
         let LoveItems = this.createItems(loveItems, loveHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_LOVE);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_LOVE);
         }, '爱情', isMobile);
         //
         let ThrillerItems = this.createItems(thrillerItems, thrillerHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_THRILLER);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_THRILLER);
         }, '惊悚', isMobile);
 
         let AdventureItems = this.createItems(adventureItems, adventureHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_ADVENTURE);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_ADVENTURE);
         }, '冒险', isMobile);
 
         let ScienceFictionItems = this.createItems(scienceFictionItems, scienceFictionHasMore, loading, page => {
-            loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION);
+            loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_SCIENCE_FICTION);
         }, '科幻', isMobile);
 
         let YearsItems = years.map(year => {
            return this.createItems(this.props[`year${year}_items`], this.props[`year${year}_hasMore`], loading, page => {
-               loadMore(page, true, true, MovieAPI.GET_MOVIES.CATEGORY_YEAR, year);
+               loadMore(page, true, true, CloudServerAPI.GET_MOVIES.CATEGORY_YEAR, year);
            }, year, isMobile);
         });
         return (

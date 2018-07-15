@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'
 import {
-    StaticFileConfig
+    IntranetServerConfig
 } from '../../config/server-info-config';
 import {
     getIconByMIME
@@ -146,7 +146,7 @@ class DetailComponent extends React.Component {
 
         let cardImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6x0qGQamxaiAtVE-O8L5LVkC5wrT8Fe9AmKiJfk8bOpCj5mxZ4Q';
         if (cover) {
-            cardImage = cover.startsWith('http') ? cover : StaticFileConfig.BASE_URL + cover;
+            cardImage = cover.startsWith('http') ? cover : IntranetServerConfig.STATIC_URL + cover;
             cardImageStyle.backgroundImage = `url(${cardImage})`;
         } else {
             cardImageStyle.backgroundColor = 'white';
@@ -216,10 +216,10 @@ class DetailComponent extends React.Component {
                     </ItemTags>
                     <OperatorButtons>
                         <OperatorButton disabled={!resource.isDownload}><a
-                            href={StaticFileConfig.BASE_URL + resource.downloadPath}
+                            href={IntranetServerConfig.STATIC_URL + resource.downloadPath}
                             download={movieName}>预览或下载</a></OperatorButton>
                         <OperatorButton id={'copy-magnet'} disabled={!resource.isDownload}
-                                        data-clipboard-text={StaticFileConfig.BASE_URL + resource.downloadPath}>复制下载链接</OperatorButton>
+                                        data-clipboard-text={IntranetServerConfig.STATIC_URL + resource.downloadPath}>复制下载链接</OperatorButton>
                         <OperatorButton id={'copy-download-link'}
                                         disabled={(!resource.torrents || resource.magnets.length === 0)}
                                         data-clipboard-text={resource.magnets && resource.magnets.length > 0 && resource.magnets[0]}>复制磁力链接</OperatorButton>
