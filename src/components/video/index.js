@@ -7,7 +7,9 @@ import {
     withRouter
 } from 'react-router-dom';
 import Spin from 'antd/lib/spin';
-import ResourceItem from '../resource-item';
+import {
+    ResourceItem
+} from '../index'
 import {
     CloudServerAPI
 } from '../../config/API';

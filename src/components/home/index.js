@@ -10,7 +10,9 @@ import {
     T1
 } from '../base/base-component';
 import Spin from 'antd/lib/spin';
-import ResourceItem from '../resource-item';
+import {
+    ResourceItem
+} from '../index'
 import {
     CloudServerAPI
 } from '../../config/API';
@@ -35,17 +37,9 @@ class HomeComponent extends React.Component {
         let Items = items.map((movie, index) => {
             return <ResourceItem width= {isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
-            }} isMobile={isMobile} showIntroduction={false}/>
+            }} isMobile={isMobile} />
         });
 
-        let itemsBodyStyle = {
-
-        };
-        if(isMobile){
-            // itemsBodyStyle.display = 'flex';
-            // itemsBodyStyle.justifyContent = 'center';
-            // itemsBodyStyle.alignItems = 'center';
-        }
         return <TabPane tab={key} key={key}>
             <ItemsBody
                 pageStart={0}
@@ -53,7 +47,6 @@ class HomeComponent extends React.Component {
                     loadMore(page, true, true, CloudServerAPI.GET_MOVIES.TYPE_VIDEO)
                 }}
                 hasMore={hasMore && !loading}       //如果还有更多的数据，并且不处于加载状态就会继续加载更多
-                style={itemsBodyStyle}
             >
                 {Items}
             </ItemsBody>

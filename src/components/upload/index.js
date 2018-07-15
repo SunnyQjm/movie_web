@@ -127,7 +127,10 @@ class UploadComponent extends React.Component {
         } = this.props;
 
         let uploadItems = fileList.map(file => {
-            return <UploadCard key={file.uid} file={file} onRemove={this.onRemove}/>
+            return <UploadCard key={file.uid} file={file} onRemove={this.onRemove} onClick={() => {
+                if(!!file.response)
+                    this.props.history.push(`/detail/${file.response.data.data.movie.id}`);
+            }}/>
         });
         return (
             <UploadPage>

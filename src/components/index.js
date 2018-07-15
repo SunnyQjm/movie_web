@@ -10,6 +10,9 @@ import LittleToolComponent from './little-tool';
 import SearchComponent from './search'
 import SearchResultComponent from "./search-result";
 import ShareWebsiteComponent from "./share-website";
+import LoadingComponent from './loading';
+import LittleToolItem from './little-tool-item';
+import ResourceItem from './resource-item';
 
 export {
     FooterComponent,
@@ -24,4 +27,7 @@ export {
     SearchComponent,
     SearchResultComponent,
     ShareWebsiteComponent,
+    LoadingComponent,
+    LittleToolItem,
+    ResourceItem,
 }

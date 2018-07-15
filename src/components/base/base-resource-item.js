@@ -128,7 +128,7 @@ class BaseResourceItem extends React.Component {
                             }}/>
                     }
                     {
-                        this.state.hover && showIntroduction?
+                        this.state.hover && showIntroduction && !!cover?
                             <TweenOne animation={{
                                 height: '100%',
                                 opacity: 0.8,

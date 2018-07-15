@@ -6,12 +6,11 @@ import styled from 'styled-components';
 import {
     withRouter
 } from 'react-router-dom';
-import {
-    T1
-} from '../base/base-component';
 import Spin from 'antd/lib/spin';
-import ResourceItem from '../resource-item';
-import LittleToolItem from '../little-tool-item';
+import {
+    ResourceItem,
+    LittleToolItem,
+} from '../index'
 import {
     CloudServerAPI
 } from '../../config/API';
@@ -71,7 +70,7 @@ class SearchResultComponent extends React.Component {
         let ris = resourceItems.map((movie, index) => {
             return <ResourceItem width= {isMobile ? 80 : 200} key={movie.id} resource={movie} onClick={() => {
                 this.props.history.push(`/detail/${movie.id}`)
-            }} isMobile={isMobile}/>
+            }} isMobile={isMobile} staticPath/>
         });
         let wis = websiteItems.map(website => {
             return <LittleToolItem width={isMobile ? 80 : 200} key={website.website} resource={website}

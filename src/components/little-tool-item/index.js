@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import {
     BaseResourceItem
 } from '../base';
-
+import {
+    CloudServerConfig
+} from '../../config/server-info-config';
 class LittleToolItem extends React.Component {
     render() {
         let {title, cover, description, website} = this.props.resource;
@@ -46,7 +48,7 @@ LittleToolItem.defaultProps = {
         }
     ),
     width: 200,
-    staticPath: '',
+    staticPath: CloudServerConfig.STATIC_URL,
 };
 
 export default LittleToolItem;

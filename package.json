@@ -2,7 +2,9 @@
   "name": "movie_web",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sunnyqjm.github.io/movie_web",
   "devDependencies": {
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "gh-pages": "^1.2.0",
     "react-app-rewired": "^1.5.2"
   },
@@ -28,6 +30,7 @@
     "react-app-rewire-less": "^2.1.2",
     "react-dom": "^16.4.1",
     "react-infinite-scroller": "^1.2.0",
+    "react-loadable": "^5.4.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-router-redux": "^4.0.8",
