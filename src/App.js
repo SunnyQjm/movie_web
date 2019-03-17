@@ -85,10 +85,10 @@ class App extends Component {
                             <Route key={'b'} path={LocalRouter.UPLOAD} component={withPropsComponent(UploadContainer, {
                                 isMobile: isMobile
                             })}/>
-                            {/*<Route key={'c'} path={LocalRouter.P2P_SHARE}*/}
-                                   {/*component={withPropsComponent(P2pShareContainer, {*/}
-                                       {/*isMobile: isMobile,*/}
-                                   {/*})}/>*/}
+                            <Route key={'c'} path={LocalRouter.P2P_SHARE}
+                                   component={withPropsComponent(P2pShareContainer, {
+                                       isMobile: isMobile,
+                                   })}/>
                             <Route key={'d'} path={`${LocalRouter.RESOURCE_DETAIL}/:id`}
                                    component={withPropsComponent(DetailContainer, {
                                        isMobile: isMobile,
